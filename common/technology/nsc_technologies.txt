@@ -15,7 +15,7 @@
 @tier7cost1 = 76000
 @tier7cost2 = 80000
 @tier7cost3 = 84000
-@tier7cost4 = 88000
+@tier7cost4 = 90000
 
 ##################
 ### SHIP HULLS ###
