@@ -68,7 +68,7 @@ CRUISER_BOW_L1: "Artillery Bow"
 CRUISER_BOW_G1S2: "Missile Bow"
 CRUISER_BOW_M2: "Broadside Bow"
 CRUISER_BOW_G1PD2: "Pinpoint Bow"
-CRUISER_BOW_M1S2: "Volley Bow"
+### CRUISER_BOW_M1S2: "Volley Bow" (In Localisation Replace Folder) ###
 
 CRUISER_MID_L1M1: "Artillery Core"
 CRUISER_MID_M3: "Broadside Core"
@@ -373,6 +373,7 @@ MISSILE_JUGGERNAUT_SECTION: "Missile Juggernaut"
 ARTILLERY_JUGGERNAUT_SECTION: "Artillery Juggernaut"
 STRIKECRAFT_JUGGERNAUT_SECTION: "Strike Craft Juggernaut"
 ARTILLERY_JUGGERNAUT_SECTION: "Broadside Juggernaut"
+MEDIUM_JUGGERNAUT_SECTION: "Barrage Juggernaut"
 #-------------------------------------------------------------------#
 CORE1_HEADQUARTERS_SECTION: "Headquarters Core 1"
 CORE2_HEADQUARTERS_SECTION: "Headquarters Core 2"

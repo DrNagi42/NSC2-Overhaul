@@ -4,9 +4,6 @@
 ### TECHNOLOGIES ###
 ####################
 
-tech_corvette_upgrades:0 "Corvette Upgrades"
-tech_corvette_upgrades_desc:0 "It is time we improve on our most basic combat craft to make it better and cheaper to produce in order to sustain our growing navy."
-
 tech_pd_destroyer_1:0 "PD Destroyer Upgrade"
 tech_pd_destroyer_1_desc:0 "Missiles, torpedoes, and strike craft all pose a grave threat to our fleets. Our naval engineers suggest re-designing our Destroyers to mount an array of numerous point-defense weapons to shoot down these targets before they can reach our ships."
 

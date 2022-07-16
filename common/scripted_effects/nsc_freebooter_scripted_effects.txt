@@ -1,0 +1,1647 @@
+origin_nsc_freebooter_start_setup = {
+	set_planet_entity = {
+		entity = "habitat_phase_03_entity"
+		graphical_culture = space_owner
+	}
+	solar_system = {
+		every_system_planet = {
+			limit = { has_planet_flag = mining_planet }
+			create_mining_station = { owner = space_owner }
+		}
+	}
+	#add_deposit = d_nsc_freebooter_home #disable this code for now
+	add_deposit = d_nsc_freebooter_habitat
+	while = {
+		count = 28 #changed to match that of the vanilla
+		create_pop = { species = owner.species }
+	}
+	add_building = building_capital
+	add_building = building_bureaucratic_1
+	add_building = building_research_lab_1
+	add_building = building_foundry_1
+	while = {
+		count = 2
+		add_district = district_nsc_freebooter_hab_housing
+	}
+	while = {
+		count = 2
+		add_district = district_nsc_freebooter_hab_foundry
+	}
+	if = {
+		limit = { owner = { is_lithoid_empire = no } }
+		while = { add_district = district_nsc_freebooter_hab_farming count = 2 }
+		else = { while = { add_district = district_nsc_freebooter_hab_mining count = 2 } }
+	}
+	add_district = district_nsc_freebooter_hab_factory
+	owner = { give_technology = { tech = tech_nsc_freebooter_boarding_pod_1 message = no } }
+}
+
+nsc_freebooter_the_duel_event_start_setup_effect = {
+	set_variable = { which = nsc_freebooter_the_duel_evt_the_khan_hp_var value = 4 } #khan default hp
+	set_variable = { which = nsc_freebooter_the_duel_evt_the_opponent_hp_var value = 4 } #opponent default hp
+	ruler = {
+		switch = {
+			trigger = has_trait
+			leader_trait_ruler_chosen = { root = { change_variable = { which = nsc_freebooter_the_duel_evt_the_khan_hp_var value = 1 } } }
+			leader_trait_ruler_cyborg = { root = { change_variable = { which = nsc_freebooter_the_duel_evt_the_khan_hp_var value = 1 } } }
+			leader_trait_ruler_psionic = { root = { change_variable = { which = nsc_freebooter_the_duel_evt_the_khan_hp_var value = 1 } } }
+			leader_trait_ruler_synthetic = { root = { change_variable = { which = nsc_freebooter_the_duel_evt_the_khan_hp_var value = 1 } } }
+		}
+	}
+	random_owned_leader = {
+		limit = { leader_class = general NOT = { has_trait = nsc_freebooter_admiral_trait_great_khan } }
+		weights = {
+			base = 5
+			modifier = { add = 3 has_skill >= 3 }
+			modifier = { add = 6 has_skill >= 6 }
+			modifier = { add = 9 has_skill >= 9 }
+		}
+		switch = {
+			trigger = has_trait
+			leader_trait_general_chosen = { root = { change_variable = { which = nsc_freebooter_the_duel_evt_the_opponent_hp_var value = 1 } } }
+			leader_trait_general_cyborg = { root = { change_variable = { which = nsc_freebooter_the_duel_evt_the_opponent_hp_var value = 1 } } }
+			leader_trait_general_psionic = { root = { change_variable = { which = nsc_freebooter_the_duel_evt_the_opponent_hp_var value = 1 } } }
+			leader_trait_general_synthetic = { root = { change_variable = { which = nsc_freebooter_the_duel_evt_the_opponent_hp_var value = 1 } } }
+		}
+		save_event_target_as = nsc_freebooter_the_duel_evt_the_opponent_target
+	}
+}
+nsc_freebooter_the_duel_event_result_reset_effect = {
+	switch = {
+		trigger = has_country_flag
+		#aggressive
+		nsc_freebooter_the_duel_evt_option_aggressive_random_1 = { remove_country_flag = nsc_freebooter_the_duel_evt_option_aggressive_random_1 }
+		nsc_freebooter_the_duel_evt_option_aggressive_random_2 = { remove_country_flag = nsc_freebooter_the_duel_evt_option_aggressive_random_2 }
+		nsc_freebooter_the_duel_evt_option_aggressive_random_3 = { remove_country_flag = nsc_freebooter_the_duel_evt_option_aggressive_random_3 }
+		nsc_freebooter_the_duel_evt_option_aggressive_random_4 = { remove_country_flag = nsc_freebooter_the_duel_evt_option_aggressive_random_4 }
+		nsc_freebooter_the_duel_evt_option_aggressive_random_5 = { remove_country_flag = nsc_freebooter_the_duel_evt_option_aggressive_random_5 }
+		#defensive
+		nsc_freebooter_the_duel_evt_option_defensive_random_1 = { remove_country_flag = nsc_freebooter_the_duel_evt_option_defensive_random_1 }
+		nsc_freebooter_the_duel_evt_option_defensive_random_2 = { remove_country_flag = nsc_freebooter_the_duel_evt_option_defensive_random_2 }
+		nsc_freebooter_the_duel_evt_option_defensive_random_3 = { remove_country_flag = nsc_freebooter_the_duel_evt_option_defensive_random_3 }
+		nsc_freebooter_the_duel_evt_option_defensive_random_4 = { remove_country_flag = nsc_freebooter_the_duel_evt_option_defensive_random_4 }
+		nsc_freebooter_the_duel_evt_option_defensive_random_5 = { remove_country_flag = nsc_freebooter_the_duel_evt_option_defensive_random_5 }
+	}
+}
+nsc_freebooter_the_duel_event_round_1_result_effect = {
+	switch = {
+		trigger = has_country_flag
+		#aggressive
+		nsc_freebooter_the_duel_evt_option_aggressive_random_1 = {
+			subtract_variable = { which = nsc_freebooter_the_duel_evt_the_khan_hp_var value = 1 }
+			subtract_variable = { which = nsc_freebooter_the_duel_evt_the_opponent_hp_var value = 1 }
+		}
+		nsc_freebooter_the_duel_evt_option_aggressive_random_2 = {
+			subtract_variable = { which = nsc_freebooter_the_duel_evt_the_khan_hp_var value = 2 }
+			subtract_variable = { which = nsc_freebooter_the_duel_evt_the_opponent_hp_var value = 2 }
+		}
+		nsc_freebooter_the_duel_evt_option_aggressive_random_3 = {} #nothing happens
+		nsc_freebooter_the_duel_evt_option_aggressive_random_4 = {
+			subtract_variable = { which = nsc_freebooter_the_duel_evt_the_khan_hp_var value = 2 }
+			subtract_variable = { which = nsc_freebooter_the_duel_evt_the_opponent_hp_var value = 1 }
+		}
+		nsc_freebooter_the_duel_evt_option_aggressive_random_5 = {
+			subtract_variable = { which = nsc_freebooter_the_duel_evt_the_khan_hp_var value = 1 }
+			subtract_variable = { which = nsc_freebooter_the_duel_evt_the_opponent_hp_var value = 2 }
+		}
+		#defensive
+		nsc_freebooter_the_duel_evt_option_defensive_random_1 = { 
+			change_variable = { which = nsc_freebooter_the_duel_evt_the_khan_hp_var value = 1 }
+		}
+		nsc_freebooter_the_duel_evt_option_defensive_random_2 = { 
+			subtract_variable = { which = nsc_freebooter_the_duel_evt_the_opponent_hp_var value = 1 }
+		}
+		nsc_freebooter_the_duel_evt_option_defensive_random_3 = {} #nothing happens
+		nsc_freebooter_the_duel_evt_option_defensive_random_4 = { 
+			change_variable = { which = nsc_freebooter_the_duel_evt_the_opponent_hp_var value = 1 }
+		}
+		nsc_freebooter_the_duel_evt_option_defensive_random_5 = {
+			subtract_variable = { which = nsc_freebooter_the_duel_evt_the_khan_hp_var value = 1 }
+			subtract_variable = { which = nsc_freebooter_the_duel_evt_the_opponent_hp_var value = 1 }
+		}
+    }
+}
+nsc_freebooter_the_duel_event_round_2_result_effect = {
+	switch = {
+		trigger = has_country_flag
+		#aggressive
+		nsc_freebooter_the_duel_evt_option_aggressive_random_1 = {
+			subtract_variable = { which = nsc_freebooter_the_duel_evt_the_khan_hp_var value = 2 }
+			subtract_variable = { which = nsc_freebooter_the_duel_evt_the_opponent_hp_var value = 1 }
+		}
+		nsc_freebooter_the_duel_evt_option_aggressive_random_2 = {
+			subtract_variable = { which = nsc_freebooter_the_duel_evt_the_khan_hp_var value = 3 }
+			subtract_variable = { which = nsc_freebooter_the_duel_evt_the_opponent_hp_var value = 2 }
+		}
+		nsc_freebooter_the_duel_evt_option_aggressive_random_3 = {
+			subtract_variable = { which = nsc_freebooter_the_duel_evt_the_khan_hp_var value = 2 }
+			subtract_variable = { which = nsc_freebooter_the_duel_evt_the_opponent_hp_var value = 3 }
+		}
+		nsc_freebooter_the_duel_evt_option_aggressive_random_4 = {
+			subtract_variable = { which = nsc_freebooter_the_duel_evt_the_khan_hp_var value = 3 }
+			subtract_variable = { which = nsc_freebooter_the_duel_evt_the_opponent_hp_var value = 3 }
+		}
+		nsc_freebooter_the_duel_evt_option_aggressive_random_5 = {} #nothing happens
+		#defensive
+		nsc_freebooter_the_duel_evt_option_defensive_random_1 = {
+			change_variable = { which = nsc_freebooter_the_duel_evt_the_khan_hp_var value = 1 }
+			subtract_variable = { which = nsc_freebooter_the_duel_evt_the_opponent_hp_var value = 1 }
+		}
+		nsc_freebooter_the_duel_evt_option_defensive_random_2 = {
+			change_variable = { which = nsc_freebooter_the_duel_evt_the_khan_hp_var value = 1 }
+		}
+		nsc_freebooter_the_duel_evt_option_defensive_random_3 = {
+			subtract_variable = { which = nsc_freebooter_the_duel_evt_the_opponent_hp_var value = 1 }
+		}
+		nsc_freebooter_the_duel_evt_option_defensive_random_4 = {} #nothing happens
+		nsc_freebooter_the_duel_evt_option_defensive_random_5 = {
+			subtract_variable = { which = nsc_freebooter_the_duel_evt_the_khan_hp_var value = 2 }
+			subtract_variable = { which = nsc_freebooter_the_duel_evt_the_opponent_hp_var value = 2 }
+		}
+    }
+}
+nsc_freebooter_planet_raiding_planetary_effect = {
+	switch = {
+		trigger = has_modifier
+		nsc_freebooter_world_currently_under_raiding_planet_modifier_1 = {
+			remove_modifier = nsc_freebooter_world_currently_under_raiding_planet_modifier_1
+			add_modifier = { modifier = nsc_freebooter_world_currently_under_raiding_planet_modifier_2 days = 1080 } 
+		}
+		nsc_freebooter_world_currently_under_raiding_planet_modifier_2 = {
+			remove_modifier = nsc_freebooter_world_currently_under_raiding_planet_modifier_2
+			add_modifier = { modifier = nsc_freebooter_world_currently_under_raiding_planet_modifier_3 days = 1080 } 
+		}
+		nsc_freebooter_world_currently_under_raiding_planet_modifier_3 = {
+			remove_modifier = nsc_freebooter_world_currently_under_raiding_planet_modifier_3 
+			add_modifier = { modifier = nsc_freebooter_world_currently_under_raiding_planet_modifier_4 days = 1080 } 
+		}
+		nsc_freebooter_world_currently_under_raiding_planet_modifier_4 = {
+			remove_modifier = nsc_freebooter_world_currently_under_raiding_planet_modifier_4 
+			add_modifier = { modifier = nsc_freebooter_world_currently_under_raiding_planet_modifier_5 days = 1080 } 
+		}
+		nsc_freebooter_world_currently_under_raiding_planet_modifier_5 = {
+			remove_modifier = nsc_freebooter_world_currently_under_raiding_planet_modifier_5
+			add_modifier = { modifier = nsc_freebooter_world_currently_under_raiding_planet_modifier_6 days = 1080 } 
+		}
+
+		nsc_freebooter_world_currently_under_raiding_planet_modifier_6 = {
+			remove_modifier = nsc_freebooter_world_currently_under_raiding_planet_modifier_6
+			add_modifier = { modifier = nsc_freebooter_world_currently_under_raiding_planet_modifier_7 days = 1080 } 
+		}
+		nsc_freebooter_world_currently_under_raiding_planet_modifier_7 = {
+			remove_modifier = nsc_freebooter_world_currently_under_raiding_planet_modifier_7
+			add_modifier = { modifier = nsc_freebooter_world_currently_under_raiding_planet_modifier_8 days = 1080 } 
+		}
+		nsc_freebooter_world_currently_under_raiding_planet_modifier_8 = {
+			remove_modifier = nsc_freebooter_world_currently_under_raiding_planet_modifier_8
+			add_modifier = { modifier = nsc_freebooter_world_currently_under_raiding_planet_modifier_9 days = 1080 } 
+		}
+		nsc_freebooter_world_currently_under_raiding_planet_modifier_9 = {
+			remove_modifier = nsc_freebooter_world_currently_under_raiding_planet_modifier_9
+			add_modifier = { modifier = nsc_freebooter_recently_raided_world_planet_modifier days = 1080 } 
+		}
+	}
+	#the sequence (of these effects) matters
+	if = {
+		limit = {
+			NOR = {
+				has_modifier = nsc_freebooter_world_currently_under_raiding_planet_modifier_1
+				has_modifier = nsc_freebooter_world_currently_under_raiding_planet_modifier_2
+				has_modifier = nsc_freebooter_world_currently_under_raiding_planet_modifier_3
+				has_modifier = nsc_freebooter_world_currently_under_raiding_planet_modifier_4
+				has_modifier = nsc_freebooter_world_currently_under_raiding_planet_modifier_5
+	
+				has_modifier = nsc_freebooter_world_currently_under_raiding_planet_modifier_6
+				has_modifier = nsc_freebooter_world_currently_under_raiding_planet_modifier_7
+				has_modifier = nsc_freebooter_world_currently_under_raiding_planet_modifier_8
+				has_modifier = nsc_freebooter_world_currently_under_raiding_planet_modifier_9
+				has_modifier = nsc_freebooter_recently_raided_world_planet_modifier
+			}
+		}
+		add_modifier = { modifier = nsc_freebooter_world_currently_under_raiding_planet_modifier_1 days = 1080 }
+	}
+}
+nsc_freebooter_boarding_pod_main_effect = {
+	create_fleet = {
+		effect = {
+			set_owner = prev.from
+			event_target:nsc_freebooter_boarded_ship_target = {
+				switch = {
+					trigger = is_ship_size
+					corvette = {
+						prev = {
+							create_ship = {
+								name = random
+								random_existing_design = corvette
+								graphical_culture = prevprev.from
+								effect = { set_disabled = yes reduce_hp_percent = 99 }
+							}
+						}
+					}
+					destroyer = {
+						prev = {
+							create_ship = {
+								name = random
+								random_existing_design = destroyer
+								graphical_culture = prevprev.from
+								effect = { set_disabled = yes reduce_hp_percent = 99 }
+							}
+						}
+					}
+					cruiser = {
+						prev = {
+							create_ship = {
+								name = random
+								random_existing_design = cruiser
+								graphical_culture = prevprev.from
+								effect = { set_disabled = yes reduce_hp_percent = 99 }
+							}
+						}
+					}
+					battleship = {
+						prev = {
+							create_ship = {
+								name = random
+								random_existing_design = battleship
+								graphical_culture = prevprev.from
+								effect = { set_disabled = yes reduce_hp_percent = 99 }
+							}
+						}
+					}
+					titan = {
+						prev = {
+							create_ship = {
+								name = random
+								random_existing_design = titan
+								graphical_culture = prevprev.from
+								effect = { set_disabled = yes reduce_hp_percent = 99 }
+							}
+						}
+					}
+					juggernaut = {
+						prev = {
+							create_ship = {
+								name = random
+								random_existing_design = juggernaut
+								graphical_culture = prevprev.from
+								effect = { set_disabled = yes reduce_hp_percent = 99 }
+							}
+						}
+					}
+					colossus = {
+						prev = {
+							create_ship = {
+								name = random
+								random_existing_design = colossus
+								graphical_culture = prevprev.from
+								effect = { set_disabled = yes reduce_hp_percent = 99 }
+							}
+						}
+					}
+					small_ship_fallen_empire = {
+						prev = {
+							create_ship = {
+								name = random
+								#[17:50:18][effect_impl.cpp:3949]: invalid design for create_ship effect.  file: events/nsc_freebooter_events.txt line: 1729
+								#random_existing_design = small_ship_fallen_empire #it seems that FEs don't have a design for this ship except a global ship design?
+								design = NAME_Gamma
+								graphical_culture = prevprev.from
+								effect = { set_disabled = yes reduce_hp_percent = 99 }
+							}
+						}
+					}
+					large_ship_fallen_empire = {
+						prev = {
+							create_ship = {
+								name = random
+								design = NAME_Beta
+								graphical_culture = prevprev.from
+								effect = { set_disabled = yes reduce_hp_percent = 99 }
+							}
+						}
+					}
+					massive_ship_fallen_empire = {
+						prev = {
+							create_ship = {
+								name = random
+								design = NAME_Alpha
+								graphical_culture = prevprev.from
+								effect = { set_disabled = yes reduce_hp_percent = 99 }
+							}
+						}
+					}
+					#NSC ship classes
+					StrikeCruiser = {
+						prev = {
+							create_ship = {
+								name = random
+								random_existing_design = StrikeCruiser
+								graphical_culture = prevprev.from
+								effect = { set_disabled = yes reduce_hp_percent = 99 }
+							}
+						}
+					}
+					escortcarrier = {
+						prev = {
+							create_ship = {
+								name = random
+								random_existing_design = escortcarrier
+								graphical_culture = prevprev.from
+								effect = { set_disabled = yes reduce_hp_percent = 99 }
+							}
+						}
+					}
+					Battlecruiser = {
+						prev = {
+							create_ship = {
+								name = random
+								random_existing_design = Battlecruiser
+								graphical_culture = prevprev.from
+								effect = { set_disabled = yes reduce_hp_percent = 99 }
+							}
+						}
+					}
+					Carrier = {
+						prev = {
+							create_ship = {
+								name = random
+								random_existing_design = Carrier
+								graphical_culture = prevprev.from
+								effect = { set_disabled = yes reduce_hp_percent = 99 }
+							}
+						}
+					}
+					Dreadnought = {
+						prev = {
+							create_ship = {
+								name = random
+								random_existing_design = Dreadnought
+								graphical_culture = prevprev.from
+								effect = { set_disabled = yes reduce_hp_percent = 99 }
+							}
+						}
+					}
+					Flagship = {
+						prev = {
+							create_ship = {
+								name = random
+								random_existing_design = Flagship
+								graphical_culture = prevprev.from
+								effect = { set_disabled = yes reduce_hp_percent = 99 }
+							}
+						}
+					}
+				}
+			}
+			set_location = { target = event_target:nsc_freebooter_boarded_ship_target }
+			set_owner = prev.this
+			enable_special_project = { name = NSC_FREEBOOTER_BOARDED_SHIP_REPAIR_PROJECT owner = prev.this location = this }
+		}
+	}
+}
+wg_nsc_freebooter_forced_border_open_cost_effect = {
+	if = {
+		limit = { num_owned_planets > 0 num_owned_planets <= 5 }
+		root = { add_resource = { influence = -25 } }
+	}
+	else_if = {
+		limit = { num_owned_planets > 5 num_owned_planets <= 10 }
+		root = { add_resource = { influence = -50 } }
+	}
+	else_if = {
+		limit = { num_owned_planets > 10 num_owned_planets <= 15 }
+		root = { add_resource = { influence = -75 } }
+	}
+	else_if = {
+		limit = { num_owned_planets > 15 num_owned_planets <= 20 }
+		root = { add_resource = { influence = -100 } }
+	}
+	else_if = {
+		limit = { num_owned_planets > 20 num_owned_planets <= 25 }
+		root = { add_resource = { influence = -125 } }
+	}
+	else_if = {
+		limit = { num_owned_planets > 25 num_owned_planets <= 30 }
+		root = { add_resource = { influence = -150 } }
+	}
+	else_if = {
+		limit = { num_owned_planets > 30 num_owned_planets <= 35 }
+		root = { add_resource = { influence = -175 } }
+	}
+	else_if = {
+		limit = { num_owned_planets > 35 num_owned_planets <= 40 }
+		root = { add_resource = { influence = -200 } }
+	}
+	else_if = {
+		limit = { num_owned_planets > 40 num_owned_planets <= 45 }
+		root = { add_resource = { influence = -225 } }
+	}
+	else_if = {
+		limit = { num_owned_planets > 45 num_owned_planets <= 50 }
+		root = { add_resource = { influence = -250 } }
+	}
+	else_if = {
+		limit = { num_owned_planets > 50 num_owned_planets <= 55 }
+		root = { add_resource = { influence = -275 } }
+	}
+	else_if = {
+		limit = { num_owned_planets > 55 num_owned_planets <= 60 }
+		root = { add_resource = { influence = -300 } }
+	}
+	else_if = {
+		limit = { num_owned_planets > 60 num_owned_planets <= 65 }
+		root = { add_resource = { influence = -325 } }
+	}
+	else_if = {
+		limit = { num_owned_planets > 65 num_owned_planets <= 70 }
+		root = { add_resource = { influence = -350 } }
+	}
+	else_if = {
+		limit = { num_owned_planets > 70 num_owned_planets <= 75 }
+		root = { add_resource = { influence = -375 } }
+	}
+	else_if = {
+		limit = { num_owned_planets > 75 num_owned_planets <= 80 }
+		root = { add_resource = { influence = -400 } }
+	}
+	else_if = {
+		limit = { num_owned_planets > 80 num_owned_planets <= 85 }
+		root = { add_resource = { influence = -425 } }
+	}
+	else_if = {
+		limit = { num_owned_planets > 85 num_owned_planets <= 90 }
+		root = { add_resource = { influence = -450 } }
+	}
+	else_if = {
+		limit = { num_owned_planets > 90 num_owned_planets <= 95 }
+		root = { add_resource = { influence = -475 } }
+	}
+	else_if = {
+		limit = { num_owned_planets > 95 }
+		root = { add_resource = { influence = -500 } }
+	}
+}
+#'nsc_freebooter.35' event real effect
+nsc_freebooter_planet_raiding_effect_1 = {
+	if = {
+		limit = {
+			root = {
+				OR = {
+					colony_type = col_generator
+					colony_type = col_habitat_energy
+					colony_type = col_generator
+				}
+			}
+		}
+		add_resource = { energy = 50 }
+		if = {
+			limit = { NOT = { is_at_war_with = root.owner } }
+			create_message = {
+				type = NSC_FREEBOOTERS_PIRATE_RAID_MESSAGE_TYPE #the notification message for a freebooter empire
+				localization = NSC_FREEBOOTER_PIRATE_RAIDING_DONE_ENERGIES
+				days = 15
+				target = root
+				variable = {
+					type = name
+					localization = NSC_FREEBOOTER_PIRATE_RAIDING_TARGET_PLANET
+					scope = root
+				}
+			}
+			else = {
+				create_message = {
+					type = NSC_FREEBOOTERS_PIRATE_RAID_MESSAGE_TYPE  #the notification message for a freebooter empire #alternative ver
+					localization = NSC_FREEBOOTER_PIRATE_RAIDING_DONE_ENERGIES_ALT
+					days = 15
+					target = root
+					variable = {
+						type = name
+						localization = NSC_FREEBOOTER_PIRATE_RAIDING_TARGET_PLANET
+						scope = root
+					}
+				}
+			}
+		}
+	}
+	else_if = {
+		limit = {
+			root = {
+				OR = {
+					colony_type = col_mining
+					colony_type = col_habitat_mining
+				}
+			}
+		}
+		add_resource = { minerals = 50 }
+		if = {
+			limit = { NOT = { is_at_war_with = root.owner } }
+			create_message = {
+				type = NSC_FREEBOOTERS_PIRATE_RAID_MESSAGE_TYPE
+				localization = NSC_FREEBOOTER_PIRATE_RAIDING_DONE_MINERALS
+				days = 15
+				target = root
+				variable = {
+					type = name
+					localization = NSC_FREEBOOTER_PIRATE_RAIDING_TARGET_PLANET
+					scope = root
+				}
+			}
+			else = {
+				create_message = {
+					type = NSC_FREEBOOTERS_PIRATE_RAID_MESSAGE_TYPE
+					localization = NSC_FREEBOOTER_PIRATE_RAIDING_DONE_MINERALS_ALT
+					days = 15
+					target = root
+					variable = {
+						type = name
+						localization = NSC_FREEBOOTER_PIRATE_RAIDING_TARGET_PLANET
+						scope = root
+					}
+				}
+			}
+		}
+	}
+	else_if = {
+		limit = {
+			root = {
+				OR = {
+					colony_type = col_farming
+					colony_type = col_ring_farming
+				}
+			}
+		}
+		add_resource = { food = 50 }
+		if = {
+			limit = { NOT = { is_at_war_with = root.owner } }
+			create_message = {
+				type = NSC_FREEBOOTERS_PIRATE_RAID_MESSAGE_TYPE
+				localization = NSC_FREEBOOTER_PIRATE_RAIDING_DONE_FOOD
+				days = 15
+				target = root
+				variable = {
+					type = name
+					localization = NSC_FREEBOOTER_PIRATE_RAIDING_TARGET_PLANET
+					scope = root
+				}
+			}
+			else = {
+				create_message = {
+					type = NSC_FREEBOOTERS_PIRATE_RAID_MESSAGE_TYPE
+					localization = NSC_FREEBOOTER_PIRATE_RAIDING_DONE_FOOD_ALT
+					days = 15
+					target = root
+					variable = {
+						type = name
+						localization = NSC_FREEBOOTER_PIRATE_RAIDING_TARGET_PLANET
+						scope = root
+					}
+				}
+			}
+		}
+	}
+	else_if = {
+		limit = {
+			root = {
+				OR = {
+					colony_type = col_foundry
+					colony_type = col_habitat_foundry
+					colony_type = col_ecu_foundry
+					colony_type = col_hiv_foundry
+					colony_type = col_mac_foundry
+				}
+			}
+		}
+		add_resource = { alloys = 50 }
+		if = {
+			limit = { NOT = { is_at_war_with = root.owner } }
+			create_message = {
+				type = NSC_FREEBOOTERS_PIRATE_RAID_MESSAGE_TYPE
+				localization = NSC_FREEBOOTER_PIRATE_RAIDING_DONE_ALLOYS
+				days = 15
+				target = root
+				variable = {
+					type = name
+					localization = NSC_FREEBOOTER_PIRATE_RAIDING_TARGET_PLANET
+					scope = root
+				}
+			}
+			else = {
+				create_message = {
+					type = NSC_FREEBOOTERS_PIRATE_RAID_MESSAGE_TYPE
+					localization = NSC_FREEBOOTER_PIRATE_RAIDING_DONE_ALLOYS_ALT
+					days = 15
+					target = root
+					variable = {
+						type = name
+						localization = NSC_FREEBOOTER_PIRATE_RAIDING_TARGET_PLANET
+						scope = root
+					}
+				}
+			}
+		}
+	}
+	else_if = {
+		limit = {
+			root = {
+				OR = {
+					colony_type = col_factory
+					colony_type = col_habitat_factory
+					colony_type = col_ecu_factory
+					colony_type = col_mac_factory
+				}
+			}
+		}
+		add_resource = { consumer_goods = 50 }
+		if = {
+			limit = { NOT = { is_at_war_with = root.owner } }
+			create_message = {
+				type = NSC_FREEBOOTERS_PIRATE_RAID_MESSAGE_TYPE
+				localization = NSC_FREEBOOTER_PIRATE_RAIDING_DONE_GOODS
+				days = 15
+				target = root
+				variable = {
+					type = name
+					localization = NSC_FREEBOOTER_PIRATE_RAIDING_TARGET_PLANET
+					scope = root
+				}
+			}
+			else = {
+				create_message = {
+					type = NSC_FREEBOOTERS_PIRATE_RAID_MESSAGE_TYPE
+					localization = NSC_FREEBOOTER_PIRATE_RAIDING_DONE_GOODS_ALT
+					days = 15
+					target = root
+					variable = {
+						type = name
+						localization = NSC_FREEBOOTER_PIRATE_RAIDING_TARGET_PLANET
+						scope = root
+					}
+				}
+			}
+		}
+	}
+	else_if = {
+		limit = {
+			root = {
+				OR = {
+					colony_type = col_research
+					colony_type = col_ecu_research
+					colony_type = col_ring_research
+					colony_type = col_habitat_research
+				}
+			}
+		}
+		add_resource = { physics_research = 50 society_research = 50 engineering_research = 50 }
+		if = {
+			limit = { NOT = { is_at_war_with = root.owner } }
+			create_message = {
+				type = NSC_FREEBOOTERS_PIRATE_RAID_MESSAGE_TYPE
+				localization = NSC_FREEBOOTER_PIRATE_RAIDING_DONE_RESEARCH
+				days = 15
+				target = root
+				variable = {
+					type = name
+					localization = NSC_FREEBOOTER_PIRATE_RAIDING_TARGET_PLANET
+					scope = root
+				}
+			}
+			else = {
+				create_message = {
+					type = NSC_FREEBOOTERS_PIRATE_RAID_MESSAGE_TYPE
+					localization = NSC_FREEBOOTER_PIRATE_RAIDING_DONE_RESEARCH_ALT
+					days = 15
+					target = root
+					variable = {
+						type = name
+						localization = NSC_FREEBOOTER_PIRATE_RAIDING_TARGET_PLANET
+						scope = root
+					}
+				}
+			}
+		}
+	}
+	else_if = {
+		limit = {
+			root = {
+				OR = {
+					colony_type = col_refinery
+					colony_type = col_habitat_refinery
+				}
+			}
+		}
+		add_resource = { exotic_gases = 50 rare_crystals = 50 volatile_motes = 50 }
+		if = {
+			limit = { NOT = { is_at_war_with = root.owner } }
+			create_message = {
+				type = NSC_FREEBOOTERS_PIRATE_RAID_MESSAGE_TYPE
+				localization = NSC_FREEBOOTER_PIRATE_RAIDING_DONE_RARES
+				days = 15
+				target = root
+				variable = {
+					type = name
+					localization = NSC_FREEBOOTER_PIRATE_RAIDING_TARGET_PLANET
+					scope = root
+				}
+			}
+			else = {
+				create_message = {
+					type = NSC_FREEBOOTERS_PIRATE_RAID_MESSAGE_TYPE
+					localization = NSC_FREEBOOTER_PIRATE_RAIDING_DONE_RARES_ALT
+					days = 15
+					target = root
+					variable = {
+						type = name
+						localization = NSC_FREEBOOTER_PIRATE_RAIDING_TARGET_PLANET
+						scope = root
+					}
+				}
+			}
+		}
+	}
+	else_if = {
+		limit = {
+			root = {
+				OR = {
+					colony_type = col_capital
+					colony_type = col_capital_hive
+					colony_type = col_capital_machine
+					colony_type = col_capital_nsc_freebooter
+					colony_type = col_fe_capital
+				}
+			}
+		}
+		add_resource = { alloys = 50 consumer_goods = 50 influence = 10 }
+		if = {
+			limit = { NOT = { is_at_war_with = root.owner } }
+			create_message = {
+				type = NSC_FREEBOOTERS_PIRATE_RAID_MESSAGE_TYPE
+				localization = NSC_FREEBOOTER_PIRATE_RAIDING_DONE_CAPITAL
+				days = 15
+				target = root
+				variable = {
+					type = name
+					localization = NSC_FREEBOOTER_PIRATE_RAIDING_TARGET_PLANET
+					scope = root
+				}
+			}
+			else = {
+				create_message = {
+					type = NSC_FREEBOOTERS_PIRATE_RAID_MESSAGE_TYPE
+					localization = NSC_FREEBOOTER_PIRATE_RAIDING_DONE_CAPITAL_ALT
+					days = 15
+					target = root
+					variable = {
+						type = name
+						localization = NSC_FREEBOOTER_PIRATE_RAIDING_TARGET_PLANET
+						scope = root
+					}
+				}
+			}
+		}
+	}
+	else_if = {
+		limit = {
+			root = {
+				NOR = {
+					colony_type = col_generator
+					colony_type = col_habitat_energy
+					colony_type = col_generator
+
+					colony_type = col_mining
+					colony_type = col_habitat_mining
+
+					colony_type = col_farming
+					colony_type = col_ring_farming
+
+					colony_type = col_foundry
+					colony_type = col_habitat_foundry
+					colony_type = col_ecu_foundry
+					colony_type = col_hiv_foundry
+					colony_type = col_mac_foundry
+
+					colony_type = col_factory
+					colony_type = col_habitat_factory
+					colony_type = col_ecu_factory
+					colony_type = col_mac_factory
+
+					colony_type = col_research
+					colony_type = col_ecu_research
+					colony_type = col_ring_research
+					colony_type = col_habitat_research
+
+					colony_type = col_refinery
+					colony_type = col_habitat_refinery
+
+					colony_type = col_capital
+					colony_type = col_capital_hive
+					colony_type = col_capital_machine
+					colony_type = col_capital_nsc_freebooter
+					colony_type = col_fe_capital
+				}
+			}
+		}
+		add_resource = { energy = 20 minerals = 20 food = 10 }
+		if = {
+			limit = { NOT = { is_at_war_with = root.owner } }
+			create_message = {
+				type = NSC_FREEBOOTERS_PIRATE_RAID_MESSAGE_TYPE
+				localization = NSC_FREEBOOTER_PIRATE_RAIDING_DONE_ETC
+				days = 15
+				target = root
+				variable = {
+					type = name
+					localization = NSC_FREEBOOTER_PIRATE_RAIDING_TARGET_PLANET
+					scope = root
+				}
+			}
+			else = {
+				create_message = {
+					type = NSC_FREEBOOTERS_PIRATE_RAID_MESSAGE_TYPE
+					localization = NSC_FREEBOOTER_PIRATE_RAIDING_DONE_ETC_ALT
+					days = 15
+					target = root
+					variable = {
+						type = name
+						localization = NSC_FREEBOOTER_PIRATE_RAIDING_TARGET_PLANET
+						scope = root
+					}
+				}
+			}
+		}
+	}
+}
+#when the empire only has 'tech_nsc_freebooter_planet_raiding_improve_1' tech
+nsc_freebooter_planet_raiding_effect_2 = {
+	if = {
+		limit = {
+			root = {
+				OR = {
+					colony_type = col_generator
+					colony_type = col_habitat_energy
+					colony_type = col_generator
+				}
+			}
+		}
+		add_resource = { energy = 80 }
+		if = {
+			limit = { NOT = { is_at_war_with = root.owner } }
+			create_message = {
+				type = NSC_FREEBOOTERS_PIRATE_RAID_MESSAGE_TYPE
+				localization = NSC_FREEBOOTER_PIRATE_RAIDING_DONE_ENERGIES_2
+				days = 15
+				target = root
+				variable = {
+					type = name
+					localization = NSC_FREEBOOTER_PIRATE_RAIDING_TARGET_PLANET
+					scope = root
+				}
+			}
+			else = {
+				create_message = {
+					type = NSC_FREEBOOTERS_PIRATE_RAID_MESSAGE_TYPE
+					localization = NSC_FREEBOOTER_PIRATE_RAIDING_DONE_ENERGIES_ALT_2
+					days = 15
+					target = root
+					variable = {
+						type = name
+						localization = NSC_FREEBOOTER_PIRATE_RAIDING_TARGET_PLANET
+						scope = root
+					}
+				}
+			}
+		}
+	}
+	else_if = {
+		limit = {
+			root = {
+				OR = {
+					colony_type = col_mining
+					colony_type = col_habitat_mining
+				}
+			}
+		}
+		add_resource = { minerals = 80 }
+		if = {
+			limit = { NOT = { is_at_war_with = root.owner } }
+			create_message = {
+				type = NSC_FREEBOOTERS_PIRATE_RAID_MESSAGE_TYPE
+				localization = NSC_FREEBOOTER_PIRATE_RAIDING_DONE_MINERALS_2
+				days = 15
+				target = root
+				variable = {
+					type = name
+					localization = NSC_FREEBOOTER_PIRATE_RAIDING_TARGET_PLANET
+					scope = root
+				}
+			}
+			else = {
+				create_message = {
+					type = NSC_FREEBOOTERS_PIRATE_RAID_MESSAGE_TYPE
+					localization = NSC_FREEBOOTER_PIRATE_RAIDING_DONE_MINERALS_ALT_2
+					days = 15
+					target = root
+					variable = {
+						type = name
+						localization = NSC_FREEBOOTER_PIRATE_RAIDING_TARGET_PLANET
+						scope = root
+					}
+				}
+			}
+		}
+	}
+	else_if = {
+		limit = {
+			root = {
+				OR = {
+					colony_type = col_farming
+					colony_type = col_ring_farming
+				}
+			}
+		}
+		add_resource = { food = 80 }
+		if = {
+			limit = { NOT = { is_at_war_with = root.owner } }
+			create_message = {
+				type = NSC_FREEBOOTERS_PIRATE_RAID_MESSAGE_TYPE
+				localization = NSC_FREEBOOTER_PIRATE_RAIDING_DONE_FOOD_2
+				days = 15
+				target = root
+				variable = {
+					type = name
+					localization = NSC_FREEBOOTER_PIRATE_RAIDING_TARGET_PLANET
+					scope = root
+				}
+			}
+			else = {
+				create_message = {
+					type = NSC_FREEBOOTERS_PIRATE_RAID_MESSAGE_TYPE
+					localization = NSC_FREEBOOTER_PIRATE_RAIDING_DONE_FOOD_ALT_2
+					days = 15
+					target = root
+					variable = {
+						type = name
+						localization = NSC_FREEBOOTER_PIRATE_RAIDING_TARGET_PLANET
+						scope = root
+					}
+				}
+			}
+		}
+	}
+	else_if = {
+		limit = {
+			root = {
+				OR = {
+					colony_type = col_foundry
+					colony_type = col_habitat_foundry
+					colony_type = col_ecu_foundry
+					colony_type = col_hiv_foundry
+					colony_type = col_mac_foundry
+				}
+			}
+		}
+		add_resource = { alloys = 80 }
+		if = {
+			limit = { NOT = { is_at_war_with = root.owner } }
+			create_message = {
+				type = NSC_FREEBOOTERS_PIRATE_RAID_MESSAGE_TYPE
+				localization = NSC_FREEBOOTER_PIRATE_RAIDING_DONE_ALLOYS_2
+				days = 15
+				target = root
+				variable = {
+					type = name
+					localization = NSC_FREEBOOTER_PIRATE_RAIDING_TARGET_PLANET
+					scope = root
+				}
+			}
+			else = {
+				create_message = {
+					type = NSC_FREEBOOTERS_PIRATE_RAID_MESSAGE_TYPE
+					localization = NSC_FREEBOOTER_PIRATE_RAIDING_DONE_ALLOYS_ALT_2
+					days = 15
+					target = root
+					variable = {
+						type = name
+						localization = NSC_FREEBOOTER_PIRATE_RAIDING_TARGET_PLANET
+						scope = root
+					}
+				}
+			}
+		}
+	}
+	else_if = {
+		limit = {
+			root = {
+				OR = {
+					colony_type = col_factory
+					colony_type = col_habitat_factory
+					colony_type = col_ecu_factory
+					colony_type = col_mac_factory
+				}
+			}
+		}
+		add_resource = { consumer_goods = 80 }
+		if = {
+			limit = { NOT = { is_at_war_with = root.owner } }
+			create_message = {
+				type = NSC_FREEBOOTERS_PIRATE_RAID_MESSAGE_TYPE
+				localization = NSC_FREEBOOTER_PIRATE_RAIDING_DONE_GOODS_2
+				days = 15
+				target = root
+				variable = {
+					type = name
+					localization = NSC_FREEBOOTER_PIRATE_RAIDING_TARGET_PLANET
+					scope = root
+				}
+			}
+			else = {
+				create_message = {
+					type = NSC_FREEBOOTERS_PIRATE_RAID_MESSAGE_TYPE
+					localization = NSC_FREEBOOTER_PIRATE_RAIDING_DONE_GOODS_ALT_2
+					days = 15
+					target = root
+					variable = {
+						type = name
+						localization = NSC_FREEBOOTER_PIRATE_RAIDING_TARGET_PLANET
+						scope = root
+					}
+				}
+			}
+		}
+	}
+	else_if = {
+		limit = {
+			root = {
+				OR = {
+					colony_type = col_research
+					colony_type = col_ecu_research
+					colony_type = col_ring_research
+					colony_type = col_habitat_research
+				}
+			}
+		}
+		add_resource = { physics_research = 80 society_research = 80 engineering_research = 80 }
+		if = {
+			limit = { NOT = { is_at_war_with = root.owner } }
+			create_message = {
+				type = NSC_FREEBOOTERS_PIRATE_RAID_MESSAGE_TYPE
+				localization = NSC_FREEBOOTER_PIRATE_RAIDING_DONE_RESEARCH_2
+				days = 15
+				target = root
+				variable = {
+					type = name
+					localization = NSC_FREEBOOTER_PIRATE_RAIDING_TARGET_PLANET
+					scope = root
+				}
+			}
+			else = {
+				create_message = {
+					type = NSC_FREEBOOTERS_PIRATE_RAID_MESSAGE_TYPE
+					localization = NSC_FREEBOOTER_PIRATE_RAIDING_DONE_RESEARCH_ALT_2
+					days = 15
+					target = root
+					variable = {
+						type = name
+						localization = NSC_FREEBOOTER_PIRATE_RAIDING_TARGET_PLANET
+						scope = root
+					}
+				}
+			}
+		}
+	}
+	else_if = {
+		limit = {
+			root = {
+				OR = {
+					colony_type = col_refinery
+					colony_type = col_habitat_refinery
+				}
+			}
+		}
+		add_resource = { exotic_gases = 80 rare_crystals = 80 volatile_motes = 80 }
+		if = {
+			limit = { NOT = { is_at_war_with = root.owner } }
+			create_message = {
+				type = NSC_FREEBOOTERS_PIRATE_RAID_MESSAGE_TYPE
+				localization = NSC_FREEBOOTER_PIRATE_RAIDING_DONE_RARES_2
+				days = 15
+				target = root
+				variable = {
+					type = name
+					localization = NSC_FREEBOOTER_PIRATE_RAIDING_TARGET_PLANET
+					scope = root
+				}
+			}
+			else = {
+				create_message = {
+					type = NSC_FREEBOOTERS_PIRATE_RAID_MESSAGE_TYPE
+					localization = NSC_FREEBOOTER_PIRATE_RAIDING_DONE_RARES_ALT_2
+					days = 15
+					target = root
+					variable = {
+						type = name
+						localization = NSC_FREEBOOTER_PIRATE_RAIDING_TARGET_PLANET
+						scope = root
+					}
+				}
+			}
+		}
+	}
+	else_if = {
+		limit = {
+			root = {
+				OR = {
+					colony_type = col_capital
+					colony_type = col_capital_hive
+					colony_type = col_capital_machine
+					colony_type = col_capital_nsc_freebooter
+					colony_type = col_fe_capital
+				}
+			}
+		}
+		add_resource = { alloys = 80 consumer_goods = 80 influence = 20 }
+		if = {
+			limit = { NOT = { is_at_war_with = root.owner } }
+			create_message = {
+				type = NSC_FREEBOOTERS_PIRATE_RAID_MESSAGE_TYPE
+				localization = NSC_FREEBOOTER_PIRATE_RAIDING_DONE_CAPITAL_2
+				days = 15
+				target = root
+				variable = {
+					type = name
+					localization = NSC_FREEBOOTER_PIRATE_RAIDING_TARGET_PLANET
+					scope = root
+				}
+			}
+			else = {
+				create_message = {
+					type = NSC_FREEBOOTERS_PIRATE_RAID_MESSAGE_TYPE
+					localization = NSC_FREEBOOTER_PIRATE_RAIDING_DONE_CAPITAL_ALT_2
+					days = 15
+					target = root
+					variable = {
+						type = name
+						localization = NSC_FREEBOOTER_PIRATE_RAIDING_TARGET_PLANET
+						scope = root
+					}
+				}
+			}
+		}
+	}
+	else_if = {
+		limit = {
+			root = {
+				NOR = {
+					colony_type = col_generator
+					colony_type = col_habitat_energy
+					colony_type = col_generator
+
+					colony_type = col_mining
+					colony_type = col_habitat_mining
+
+					colony_type = col_farming
+					colony_type = col_ring_farming
+
+					colony_type = col_foundry
+					colony_type = col_habitat_foundry
+					colony_type = col_ecu_foundry
+					colony_type = col_hiv_foundry
+					colony_type = col_mac_foundry
+
+					colony_type = col_factory
+					colony_type = col_habitat_factory
+					colony_type = col_ecu_factory
+					colony_type = col_mac_factory
+
+					colony_type = col_research
+					colony_type = col_ecu_research
+					colony_type = col_ring_research
+					colony_type = col_habitat_research
+
+					colony_type = col_refinery
+					colony_type = col_habitat_refinery
+
+					colony_type = col_capital
+					colony_type = col_capital_hive
+					colony_type = col_capital_machine
+					colony_type = col_capital_nsc_freebooter
+					colony_type = col_fe_capital
+				}
+			}
+		}
+		add_resource = { energy = 35 minerals = 35 food = 10 }
+		if = {
+			limit = { NOT = { is_at_war_with = root.owner } }
+			create_message = {
+				type = NSC_FREEBOOTERS_PIRATE_RAID_MESSAGE_TYPE
+				localization = NSC_FREEBOOTER_PIRATE_RAIDING_DONE_ETC_2
+				days = 15
+				target = root
+				variable = {
+					type = name
+					localization = NSC_FREEBOOTER_PIRATE_RAIDING_TARGET_PLANET
+					scope = root
+				}
+			}
+			else = {
+				create_message = {
+					type = NSC_FREEBOOTERS_PIRATE_RAID_MESSAGE_TYPE
+					localization = NSC_FREEBOOTER_PIRATE_RAIDING_DONE_ETC_ALT_2
+					days = 15
+					target = root
+					variable = {
+						type = name
+						localization = NSC_FREEBOOTER_PIRATE_RAIDING_TARGET_PLANET
+						scope = root
+					}
+				}
+			}
+		}
+	}
+}
+#when the empire has 'tech_nsc_freebooter_planet_raiding_improve_2' tech too
+nsc_freebooter_planet_raiding_effect_3 = {
+	if = {
+		limit = {
+			root = {
+				OR = {
+					colony_type = col_generator
+					colony_type = col_habitat_energy
+					colony_type = col_generator
+				}
+			}
+		}
+		add_resource = { energy = 100 }
+		if = {
+			limit = { NOT = { is_at_war_with = root.owner } }
+			create_message = {
+				type = NSC_FREEBOOTERS_PIRATE_RAID_MESSAGE_TYPE
+				localization = NSC_FREEBOOTER_PIRATE_RAIDING_DONE_ENERGIES_3
+				days = 15
+				target = root
+				variable = {
+					type = name
+					localization = NSC_FREEBOOTER_PIRATE_RAIDING_TARGET_PLANET
+					scope = root
+				}
+			}
+			else = {
+				create_message = {
+					type = NSC_FREEBOOTERS_PIRATE_RAID_MESSAGE_TYPE
+					localization = NSC_FREEBOOTER_PIRATE_RAIDING_DONE_ENERGIES_ALT_3
+					days = 15
+					target = root
+					variable = {
+						type = name
+						localization = NSC_FREEBOOTER_PIRATE_RAIDING_TARGET_PLANET
+						scope = root
+					}
+				}
+			}
+		}
+	}
+	else_if = {
+		limit = {
+			root = {
+				OR = {
+					colony_type = col_mining
+					colony_type = col_habitat_mining
+				}
+			}
+		}
+		add_resource = { minerals = 100 }
+		if = {
+			limit = { NOT = { is_at_war_with = root.owner } }
+			create_message = {
+				type = NSC_FREEBOOTERS_PIRATE_RAID_MESSAGE_TYPE
+				localization = NSC_FREEBOOTER_PIRATE_RAIDING_DONE_MINERALS_3
+				days = 15
+				target = root
+				variable = {
+					type = name
+					localization = NSC_FREEBOOTER_PIRATE_RAIDING_TARGET_PLANET
+					scope = root
+				}
+			}
+			else = {
+				create_message = {
+					type = NSC_FREEBOOTERS_PIRATE_RAID_MESSAGE_TYPE
+					localization = NSC_FREEBOOTER_PIRATE_RAIDING_DONE_MINERALS_ALT_3
+					days = 15
+					target = root
+					variable = {
+						type = name
+						localization = NSC_FREEBOOTER_PIRATE_RAIDING_TARGET_PLANET
+						scope = root
+					}
+				}
+			}
+		}
+	}
+	else_if = {
+		limit = {
+			root = {
+				OR = {
+					colony_type = col_farming
+					colony_type = col_ring_farming
+				}
+			}
+		}
+		add_resource = { food = 100 }
+		if = {
+			limit = { NOT = { is_at_war_with = root.owner } }
+			create_message = {
+				type = NSC_FREEBOOTERS_PIRATE_RAID_MESSAGE_TYPE
+				localization = NSC_FREEBOOTER_PIRATE_RAIDING_DONE_FOOD_3
+				days = 15
+				target = root
+				variable = {
+					type = name
+					localization = NSC_FREEBOOTER_PIRATE_RAIDING_TARGET_PLANET
+					scope = root
+				}
+			}
+			else = {
+				create_message = {
+					type = NSC_FREEBOOTERS_PIRATE_RAID_MESSAGE_TYPE
+					localization = NSC_FREEBOOTER_PIRATE_RAIDING_DONE_FOOD_ALT_3
+					days = 15
+					target = root
+					variable = {
+						type = name
+						localization = NSC_FREEBOOTER_PIRATE_RAIDING_TARGET_PLANET
+						scope = root
+					}
+				}
+			}
+		}
+	}
+	else_if = {
+		limit = {
+			root = {
+				OR = {
+					colony_type = col_foundry
+					colony_type = col_habitat_foundry
+					colony_type = col_ecu_foundry
+					colony_type = col_hiv_foundry
+					colony_type = col_mac_foundry
+				}
+			}
+		}
+		add_resource = { alloys = 100 }
+		if = {
+			limit = { NOT = { is_at_war_with = root.owner } }
+			create_message = {
+				type = NSC_FREEBOOTERS_PIRATE_RAID_MESSAGE_TYPE
+				localization = NSC_FREEBOOTER_PIRATE_RAIDING_DONE_ALLOYS_3
+				days = 15
+				target = root
+				variable = {
+					type = name
+					localization = NSC_FREEBOOTER_PIRATE_RAIDING_TARGET_PLANET
+					scope = root
+				}
+			}
+			else = {
+				create_message = {
+					type = NSC_FREEBOOTERS_PIRATE_RAID_MESSAGE_TYPE
+					localization = NSC_FREEBOOTER_PIRATE_RAIDING_DONE_ALLOYS_ALT_3
+					days = 15
+					target = root
+					variable = {
+						type = name
+						localization = NSC_FREEBOOTER_PIRATE_RAIDING_TARGET_PLANET
+						scope = root
+					}
+				}
+			}
+		}
+	}
+	else_if = {
+		limit = {
+			root = {
+				OR = {
+					colony_type = col_factory
+					colony_type = col_habitat_factory
+					colony_type = col_ecu_factory
+					colony_type = col_mac_factory
+				}
+			}
+		}
+		add_resource = { consumer_goods = 100 }
+		if = {
+			limit = { NOT = { is_at_war_with = root.owner } }
+			create_message = {
+				type = NSC_FREEBOOTERS_PIRATE_RAID_MESSAGE_TYPE
+				localization = NSC_FREEBOOTER_PIRATE_RAIDING_DONE_GOODS_3
+				days = 15
+				target = root
+				variable = {
+					type = name
+					localization = NSC_FREEBOOTER_PIRATE_RAIDING_TARGET_PLANET
+					scope = root
+				}
+			}
+			else = {
+				create_message = {
+					type = NSC_FREEBOOTERS_PIRATE_RAID_MESSAGE_TYPE
+					localization = NSC_FREEBOOTER_PIRATE_RAIDING_DONE_GOODS_ALT_3
+					days = 15
+					target = root
+					variable = {
+						type = name
+						localization = NSC_FREEBOOTER_PIRATE_RAIDING_TARGET_PLANET
+						scope = root
+					}
+				}
+			}
+		}
+	}
+	else_if = {
+		limit = {
+			root = {
+				OR = {
+					colony_type = col_research
+					colony_type = col_ecu_research
+					colony_type = col_ring_research
+					colony_type = col_habitat_research
+				}
+			}
+		}
+		add_resource = { physics_research = 100 society_research = 100 engineering_research = 100 }
+		if = {
+			limit = { NOT = { is_at_war_with = root.owner } }
+			create_message = {
+				type = NSC_FREEBOOTERS_PIRATE_RAID_MESSAGE_TYPE
+				localization = NSC_FREEBOOTER_PIRATE_RAIDING_DONE_RESEARCH_3
+				days = 15
+				target = root
+				variable = {
+					type = name
+					localization = NSC_FREEBOOTER_PIRATE_RAIDING_TARGET_PLANET
+					scope = root
+				}
+			}
+			else = {
+				create_message = {
+					type = NSC_FREEBOOTERS_PIRATE_RAID_MESSAGE_TYPE
+					localization = NSC_FREEBOOTER_PIRATE_RAIDING_DONE_RESEARCH_ALT_3
+					days = 15
+					target = root
+					variable = {
+						type = name
+						localization = NSC_FREEBOOTER_PIRATE_RAIDING_TARGET_PLANET
+						scope = root
+					}
+				}
+			}
+		}
+	}
+	else_if = {
+		limit = {
+			root = {
+				OR = {
+					colony_type = col_refinery
+					colony_type = col_habitat_refinery
+				}
+			}
+		}
+		add_resource = { exotic_gases = 100 rare_crystals = 100 volatile_motes = 100 }
+		if = {
+			limit = { NOT = { is_at_war_with = root.owner } }
+			create_message = {
+				type = NSC_FREEBOOTERS_PIRATE_RAID_MESSAGE_TYPE
+				localization = NSC_FREEBOOTER_PIRATE_RAIDING_DONE_RARES_3
+				days = 15
+				target = root
+				variable = {
+					type = name
+					localization = NSC_FREEBOOTER_PIRATE_RAIDING_TARGET_PLANET
+					scope = root
+				}
+			}
+			else = {
+				create_message = {
+					type = NSC_FREEBOOTERS_PIRATE_RAID_MESSAGE_TYPE
+					localization = NSC_FREEBOOTER_PIRATE_RAIDING_DONE_RARES_ALT_3
+					days = 15
+					target = root
+					variable = {
+						type = name
+						localization = NSC_FREEBOOTER_PIRATE_RAIDING_TARGET_PLANET
+						scope = root
+					}
+				}
+			}
+		}
+	}
+	else_if = {
+		limit = {
+			root = {
+				OR = {
+					colony_type = col_capital
+					colony_type = col_capital_hive
+					colony_type = col_capital_machine
+					colony_type = col_capital_nsc_freebooter
+					colony_type = col_fe_capital
+				}
+			}
+		}
+		add_resource = { alloys = 100 consumer_goods = 100 influence = 30 }
+		if = {
+			limit = { NOT = { is_at_war_with = root.owner } }
+			create_message = {
+				type = NSC_FREEBOOTERS_PIRATE_RAID_MESSAGE_TYPE
+				localization = NSC_FREEBOOTER_PIRATE_RAIDING_DONE_CAPITAL_3
+				days = 15
+				target = root
+				variable = {
+					type = name
+					localization = NSC_FREEBOOTER_PIRATE_RAIDING_TARGET_PLANET
+					scope = root
+				}
+			}
+			else = {
+				create_message = {
+					type = NSC_FREEBOOTERS_PIRATE_RAID_MESSAGE_TYPE
+					localization = NSC_FREEBOOTER_PIRATE_RAIDING_DONE_CAPITAL_ALT_3
+					days = 15
+					target = root
+					variable = {
+						type = name
+						localization = NSC_FREEBOOTER_PIRATE_RAIDING_TARGET_PLANET
+						scope = root
+					}
+				}
+			}
+		}
+	}
+	else_if = {
+		limit = {
+			root = {
+				NOR = {
+					colony_type = col_generator
+					colony_type = col_habitat_energy
+					colony_type = col_generator
+
+					colony_type = col_mining
+					colony_type = col_habitat_mining
+
+					colony_type = col_farming
+					colony_type = col_ring_farming
+
+					colony_type = col_foundry
+					colony_type = col_habitat_foundry
+					colony_type = col_ecu_foundry
+					colony_type = col_hiv_foundry
+					colony_type = col_mac_foundry
+
+					colony_type = col_factory
+					colony_type = col_habitat_factory
+					colony_type = col_ecu_factory
+					colony_type = col_mac_factory
+
+					colony_type = col_research
+					colony_type = col_ecu_research
+					colony_type = col_ring_research
+					colony_type = col_habitat_research
+
+					colony_type = col_refinery
+					colony_type = col_habitat_refinery
+
+					colony_type = col_capital
+					colony_type = col_capital_hive
+					colony_type = col_capital_machine
+					colony_type = col_capital_nsc_freebooter
+					colony_type = col_fe_capital
+				}
+			}
+		}
+		add_resource = { energy = 45 minerals = 45 food = 10 }
+		if = {
+			limit = { NOT = { is_at_war_with = root.owner } }
+			create_message = {
+				type = NSC_FREEBOOTERS_PIRATE_RAID_MESSAGE_TYPE
+				localization = NSC_FREEBOOTER_PIRATE_RAIDING_DONE_ETC_3
+				days = 15
+				target = root
+				variable = {
+					type = name
+					localization = NSC_FREEBOOTER_PIRATE_RAIDING_TARGET_PLANET
+					scope = root
+				}
+			}
+			else = {
+				create_message = {
+					type = NSC_FREEBOOTERS_PIRATE_RAID_MESSAGE_TYPE
+					localization = NSC_FREEBOOTER_PIRATE_RAIDING_DONE_ETC_ALT_3
+					days = 15
+					target = root
+					variable = {
+						type = name
+						localization = NSC_FREEBOOTER_PIRATE_RAIDING_TARGET_PLANET
+						scope = root
+					}
+				}
+			}
+		}
+	}
+}

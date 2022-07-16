@@ -101,9 +101,9 @@
 @titan_power_10 = 15500
 @titan_power_11 = 17000
 
-@Flagship_power_1 = 15000
-@Flagship_power_2 = 20000
-@Flagship_power_3 = 30000
+@Flagship_power_1 = 35000
+@Flagship_power_2 = 65000
+@Flagship_power_3 = 95000
 
 @platform_power_1 = 200
 @platform_power_2 = 260
@@ -139,7 +139,7 @@
 @fortress_power_10 = 8000
 @fortress_power_11 = 10000
 
-@hqpower = 30000
+@hqpower = 90000
 
 
 
@@ -782,7 +782,9 @@ utility_component_template = {
 	ai_weight = { weight = 5 }
 }
 
-### NSC REACTOR COMPONENTS ###
+######################################
+### DARK MATTER REACTOR COMPONENTS ###
+######################################
 utility_component_template = {
 	key = "STRIKECRUISER_DARK_MATTER_REACTOR"
 	size = small
@@ -834,7 +836,13 @@ utility_component_template = {
 	size_restriction = { Battlecruiser escortcarrier explorationship }
 	upgrades_to = "BATTLECRUISER_GRAVITON_REACTOR"
 	
-	ai_weight = { weight = 6 }
+	ai_weight = { 
+		weight = 6
+		modifier = {
+			factor = 0.0
+			no_resource_for_component = { RESOURCE = sr_dark_matter }
+		}
+	}
 }
 
 utility_component_template = {
@@ -860,7 +868,13 @@ utility_component_template = {
 	component_set = "power_core"
 	size_restriction = { Carrier }
 	
-	ai_weight = { weight = 6 }
+	ai_weight = { 
+		weight = 6
+		modifier = {
+			factor = 0.0
+			no_resource_for_component = { RESOURCE = sr_dark_matter }
+		}
+	}
 }
 
 utility_component_template = {
@@ -887,7 +901,13 @@ utility_component_template = {
 	size_restriction = { Dreadnought }
 	upgrades_to = "DREADNOUGHT_GRAVITON_REACTOR"
 	
-	ai_weight = { weight = 6 }
+	ai_weight = { 
+		weight = 6
+		modifier = {
+			factor = 0.0
+			no_resource_for_component = { RESOURCE = sr_dark_matter }
+		}
+	}
 }
 
 ###################################
@@ -911,7 +931,7 @@ utility_component_template = {
 
 	prerequisites = { "tech_graviton_power" }
 	component_set = "power_core"
-	size_restriction = { corvette crisis_corvette colonizer sponsored_colonizer lithoid_colonizer constructor science transport }
+	size_restriction = { corvette crisis_corvette offspring_corvette offspring_corvette colonizer sponsored_colonizer lithoid_colonizer constructor science transport }
 	upgrades_to = "CORVETTE_NAQUADRIA_REACTOR"
 	
 	ai_weight = { weight = 7 }
@@ -935,7 +955,7 @@ utility_component_template = {
 	
 	prerequisites = { "tech_graviton_power" }
 	component_set = "power_core"
-	size_restriction = { destroyer crisis_destroyer }
+	size_restriction = { destroyer crisis_destroyer offspring_destroyer }
 	upgrades_to = "DESTROYER_NAQUADRIA_REACTOR"
 	
 	ai_weight = { weight = 7 }
@@ -959,7 +979,7 @@ utility_component_template = {
 	
 	prerequisites = { "tech_graviton_power" }
 	component_set = "power_core"
-	size_restriction = { cruiser crisis_cruiser }
+	size_restriction = { cruiser crisis_cruiser offspring_cruiser }
 	upgrades_to = "CRUISER_NAQUADRIA_REACTOR"
 	
 	ai_weight = { weight = 7 }
@@ -1031,7 +1051,7 @@ utility_component_template = {
 	
 	prerequisites = { "tech_graviton_power" }
 	component_set = "power_core"
-	size_restriction = { battleship Carrier }
+	size_restriction = { battleship offspring_battleship Carrier }
 	upgrades_to = "BATTLESHIP_NAQUADRIA_REACTOR"
 	
 	ai_weight = { weight = 7 }
@@ -1181,7 +1201,7 @@ utility_component_template = {
 	
 	prerequisites = { "tech_naquadria_power" }
 	component_set = "power_core"
-	size_restriction = { corvette crisis_corvette colonizer sponsored_colonizer lithoid_colonizer constructor science transport }
+	size_restriction = { corvette crisis_corvette offspring_corvette colonizer sponsored_colonizer lithoid_colonizer constructor science transport }
 	upgrades_to = "CORVETTE_SINGULARITY_REACTOR"
 	
 	ai_weight = { weight = 8 }
@@ -1205,7 +1225,7 @@ utility_component_template = {
 	
 	prerequisites = { "tech_naquadria_power" }
 	component_set = "power_core"
-	size_restriction = { destroyer crisis_destroyer }
+	size_restriction = { destroyer crisis_destroyer offspring_destroyer }
 	upgrades_to = "DESTROYER_SINGULARITY_REACTOR"
 	
 	ai_weight = { weight = 8 }
@@ -1229,7 +1249,7 @@ utility_component_template = {
 	
 	prerequisites = { "tech_naquadria_power" }
 	component_set = "power_core"
-	size_restriction = { cruiser crisis_cruiser }
+	size_restriction = { cruiser crisis_cruiser offspring_cruiser }
 	upgrades_to = "CRUISER_SINGULARITY_REACTOR"
 	
 	ai_weight = { weight = 8 }
@@ -1301,7 +1321,7 @@ utility_component_template = {
 	
 	prerequisites = { "tech_naquadria_power" }
 	component_set = "power_core"
-	size_restriction = { battleship Carrier }
+	size_restriction = { battleship offspring_battleship Carrier }
 	upgrades_to = "BATTLESHIP_SINGULARITY_REACTOR"
 	
 	ai_weight = { weight = 8 }
@@ -1451,7 +1471,7 @@ utility_component_template = {
 	
 	prerequisites = { "tech_singularity_power" }
 	component_set = "power_core"
-	size_restriction = { corvette crisis_corvette colonizer sponsored_colonizer lithoid_colonizer constructor science transport }
+	size_restriction = { corvette crisis_corvette offspring_corvette colonizer sponsored_colonizer lithoid_colonizer constructor science transport }
 	upgrades_to = "CORVETTE_MULTIDIMENSIONAL_REACTOR"
 	
 	ai_weight = { weight = 9 }
@@ -1475,7 +1495,7 @@ utility_component_template = {
 	
 	prerequisites = { "tech_singularity_power" }
 	component_set = "power_core"
-	size_restriction = { destroyer crisis_destroyer }
+	size_restriction = { destroyer crisis_destroyer offspring_destroyer }
 	upgrades_to = "DESTROYER_MULTIDIMENSIONAL_REACTOR"
 	
 	ai_weight = { weight = 9 }
@@ -1499,7 +1519,7 @@ utility_component_template = {
 
 	prerequisites = { "tech_singularity_power" }
 	component_set = "power_core"
-	size_restriction = { cruiser crisis_cruiser }
+	size_restriction = { cruiser crisis_cruiser offspring_cruiser }
 	upgrades_to = "CRUISER_MULTIDIMENSIONAL_REACTOR"
 	
 	ai_weight = { weight = 9 }
@@ -1571,7 +1591,7 @@ utility_component_template = {
 	
 	prerequisites = { "tech_singularity_power" }
 	component_set = "power_core"
-	size_restriction = { battleship Carrier }
+	size_restriction = { battleship offspring_battleship Carrier }
 	upgrades_to = "BATTLESHIP_MULTIDIMENSIONAL_REACTOR"
 	
 	ai_weight = { weight = 9 }
@@ -1721,7 +1741,7 @@ utility_component_template = {
 	
 	prerequisites = { "tech_multidimensional_power" }
 	component_set = "power_core"
-	size_restriction = { corvette crisis_corvette colonizer sponsored_colonizer lithoid_colonizer constructor science transport }
+	size_restriction = { corvette crisis_corvette offspring_corvette colonizer sponsored_colonizer lithoid_colonizer constructor science transport }
 	upgrades_to = "CORVETTE_OPTIMIZED_ENIGMATIC_REACTOR"
 	
 	ai_weight = { weight = 10 }
@@ -1745,7 +1765,7 @@ utility_component_template = {
 	
 	prerequisites = { "tech_multidimensional_power" }
 	component_set = "power_core"
-	size_restriction = { destroyer crisis_destroyer }
+	size_restriction = { destroyer crisis_destroyer offspring_destroyer }
 	upgrades_to = "DESTROYER_OPTIMIZED_ENIGMATIC_REACTOR"
 	
 	ai_weight = { weight = 10 }
@@ -1769,7 +1789,7 @@ utility_component_template = {
 	
 	prerequisites = { "tech_multidimensional_power" }
 	component_set = "power_core"
-	size_restriction = { cruiser crisis_cruiser }
+	size_restriction = { cruiser crisis_cruiser offspring_cruiser }
 	upgrades_to = "CRUISER_OPTIMIZED_ENIGMATIC_REACTOR"
 	
 	ai_weight = { weight = 10 }
@@ -1841,7 +1861,7 @@ utility_component_template = {
 	
 	prerequisites = { "tech_multidimensional_power" }
 	component_set = "power_core"
-	size_restriction = { battleship Carrier }
+	size_restriction = { battleship offspring_battleship Carrier }
 	upgrades_to = "BATTLESHIP_OPTIMIZED_ENIGMATIC_REACTOR"
 	
 	ai_weight = { weight = 10 }
@@ -1994,9 +2014,15 @@ utility_component_template = {
 	
 	prerequisites = { "tech_optimized_enigmatic_power" }
 	component_set = "power_core"
-	size_restriction = { corvette crisis_corvette colonizer sponsored_colonizer lithoid_colonizer constructor science transport }
+	size_restriction = { corvette crisis_corvette offspring_corvette colonizer sponsored_colonizer lithoid_colonizer constructor science transport }
 	
-	ai_weight = { weight = 11 }
+	ai_weight = { 
+		weight = 11
+		modifier = {
+			factor = 0.0
+			no_resource_for_component = { RESOURCE = sr_dark_matter }
+		}
+	}
 }
 
 utility_component_template = {
@@ -2020,9 +2046,15 @@ utility_component_template = {
 	
 	prerequisites = { "tech_optimized_enigmatic_power" }
 	component_set = "power_core"
-	size_restriction = { destroyer crisis_destroyer }
+	size_restriction = { destroyer crisis_destroyer offspring_destroyer }
 	
-	ai_weight = { weight = 11 }
+	ai_weight = { 
+		weight = 11
+		modifier = {
+			factor = 0.0
+			no_resource_for_component = { RESOURCE = sr_dark_matter }
+		}
+	}
 }
 
 utility_component_template = {
@@ -2046,9 +2078,15 @@ utility_component_template = {
 	
 	prerequisites = { "tech_optimized_enigmatic_power" }
 	component_set = "power_core"
-	size_restriction = { cruiser crisis_cruiser }
+	size_restriction = { cruiser crisis_cruiser offspring_cruiser }
 	
-	ai_weight = { weight = 11 }
+	ai_weight = { 
+		weight = 11
+		modifier = {
+			factor = 0.0
+			no_resource_for_component = { RESOURCE = sr_dark_matter }
+		}
+	}
 }
 
 utility_component_template = {
@@ -2074,7 +2112,13 @@ utility_component_template = {
 	component_set = "power_core"
 	size_restriction = { StrikeCruiser }
 	
-	ai_weight = { weight = 11 }
+	ai_weight = { 
+		weight = 11
+		modifier = {
+			factor = 0.0
+			no_resource_for_component = { RESOURCE = sr_dark_matter }
+		}
+	}
 }
 
 utility_component_template = {
@@ -2100,7 +2144,13 @@ utility_component_template = {
 	component_set = "power_core"
 	size_restriction = { Battlecruiser escortcarrier explorationship }
 	
-	ai_weight = { weight = 11 }
+	ai_weight = { 
+		weight = 11
+		modifier = {
+			factor = 0.0
+			no_resource_for_component = { RESOURCE = sr_dark_matter }
+		}
+	}
 }
 
 utility_component_template = {
@@ -2124,9 +2174,15 @@ utility_component_template = {
 	
 	prerequisites = { "tech_optimized_enigmatic_power" }
 	component_set = "power_core"
-	size_restriction = { battleship Carrier }
+	size_restriction = { battleship offspring_battleship Carrier }
 	
-	ai_weight = { weight = 11 }
+	ai_weight = { 
+		weight = 11
+		modifier = {
+			factor = 0.0
+			no_resource_for_component = { RESOURCE = sr_dark_matter }
+		}
+	}
 }
 
 utility_component_template = {
@@ -2152,7 +2208,13 @@ utility_component_template = {
 	component_set = "power_core"
 	size_restriction = { Dreadnought }
 	
-	ai_weight = { weight = 11 }
+	ai_weight = { 
+		weight = 11
+		modifier = {
+			factor = 0.0
+			no_resource_for_component = { RESOURCE = sr_dark_matter }
+		}
+	}
 }
 
 utility_component_template = {
@@ -2178,7 +2240,13 @@ utility_component_template = {
 	component_set = "power_core"
 	size_restriction = { titan }
 	
-	ai_weight = { weight = 11 }
+	ai_weight = { 
+		weight = 11
+		modifier = {
+			factor = 0.0
+			no_resource_for_component = { RESOURCE = sr_dark_matter }
+		}
+	}
 }
 
 utility_component_template = {
@@ -2205,7 +2273,13 @@ utility_component_template = {
 	size_restriction = { military_station_small }
 	component_set = "power_core"
 
-	ai_weight = { weight = 11 }
+	ai_weight = { 
+		weight = 11
+		modifier = {
+			factor = 0.0
+			no_resource_for_component = { RESOURCE = sr_dark_matter }
+		}
+	}
 }
 
 utility_component_template = {
@@ -2232,7 +2306,13 @@ utility_component_template = {
 	size_restriction = { military_station_medium }
 	component_set = "power_core"
 
-	ai_weight = { weight = 13 }
+	ai_weight = { 
+		weight = 13
+		modifier = {
+			factor = 0.0
+			no_resource_for_component = { RESOURCE = sr_dark_matter }
+		}
+	}
 }
 
 utility_component_template = {
@@ -2259,7 +2339,13 @@ utility_component_template = {
 	size_restriction = { military_station_large }
 	component_set = "power_core"
 
-	ai_weight = { weight = 13 }
+	ai_weight = { 
+		weight = 13
+		modifier = {
+			factor = 0.0
+			no_resource_for_component = { RESOURCE = sr_dark_matter }
+		}
+	}
 }
 
 ###################################
@@ -2331,23 +2417,6 @@ utility_component_template = {
 	component_set = "power_core"
 
 	ai_weight = { weight = 12 }
-}
-
-##################################
-### CITADEL REACTOR COMPONENTS ###
-##################################
-utility_component_template = {
-	key = "CITADEL_DARK_MATTER_REACTOR"
-	size = large
-	icon = "GFX_ship_part_dark_matter_power_core"
-	icon_frame = 1
-	power = @hqpower
-
-	component_set = "power_core"
-	class_restriction = { shipclass_starbase }
-	size_restriction = { starbase_citadel starbase_stronghold starbase_headquarters juggernaut headquarters }
-
-	ai_weight = { weight = 10000 }
 }
 
 ####################################################

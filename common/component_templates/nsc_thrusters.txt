@@ -568,7 +568,13 @@ utility_component_template = {
 	size_restriction = { StrikeCruiser escortcarrier explorationship }
 	component_set = "thruster_components"
 	
-	ai_weight = { weight = 5 }
+	ai_weight = {
+		weight = 5
+		modifier = {
+			factor = 0.0
+			no_resource_for_component = { RESOURCE = sr_dark_matter }
+		}
+	}
 }
 
 utility_component_template = {
@@ -594,7 +600,13 @@ utility_component_template = {
 	size_restriction = { Battlecruiser }
 	component_set = "thruster_components"
 	
-	ai_weight = { weight = 5 }
+	ai_weight = {
+		weight = 5
+		modifier = {
+			factor = 0.0
+			no_resource_for_component = { RESOURCE = sr_dark_matter }
+		}
+	}
 }
 
 utility_component_template = {
@@ -620,7 +632,13 @@ utility_component_template = {
 	size_restriction = { Carrier }
 	component_set = "thruster_components"
 	
-	ai_weight = { weight = 5 }
+	ai_weight = {
+		weight = 5
+		modifier = {
+			factor = 0.0
+			no_resource_for_component = { RESOURCE = sr_dark_matter }
+		}
+	}
 }
 
 utility_component_template = {
@@ -643,7 +661,13 @@ utility_component_template = {
 	size_restriction = { Dreadnought }
 	component_set = "thruster_components"
 	
-	ai_weight = { weight = 5 }
+	ai_weight = {
+		weight = 5
+		modifier = {
+			factor = 0.0
+			no_resource_for_component = { RESOURCE = sr_dark_matter }
+		}
+	}
 }
 
 utility_component_template = {
@@ -666,5 +690,11 @@ utility_component_template = {
 	size_restriction = { Flagship }
 	component_set = "thruster_components"
 	
-	ai_weight = { weight = 5 }
+	ai_weight = {
+		weight = 5
+		modifier = {
+			factor = 0.0
+			no_resource_for_component = { RESOURCE = sr_dark_matter }
+		}
+	}
 }

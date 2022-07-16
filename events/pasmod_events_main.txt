@@ -14,14 +14,14 @@ planet_event = {
 			is_planet_class = pc_infested
 			is_planet_class = pc_ai 
 		}
-		any_fleet_in_orbit = { any_owned_ship = { pasmod_main_trigger = yes } } #check this first
+		any_fleet_in_orbit = { any_controlled_ship = { pasmod_main_trigger = yes } } #check this first
 		planet_devastation >= 30 #this event will happen only when the planet's devastation is reach or over this percentage #currently 30%
 	}
 
 	immediate = {
 		every_fleet_in_orbit = {
-			limit = { any_owned_ship = { pasmod_main_trigger = yes } }
-			every_owned_ship = {
+			limit = { any_controlled_ship = { pasmod_main_trigger = yes } }
+			every_controlled_ship = {
 				limit = {
 					NOT = { has_ship_flag = pasmod_army_drop_done }
 					OR = {
@@ -40,7 +40,7 @@ planet_event = {
 				pasmod_auto_invasion_process_1 = yes
 				set_timed_ship_flag = { flag = pasmod_army_drop_done days = 90 }
 			}
-			every_owned_ship = {
+			every_controlled_ship = {
 				limit = {
 					NOT = { has_ship_flag = pasmod_army_drop_done }
 					OR = {
@@ -59,7 +59,7 @@ planet_event = {
 				pasmod_auto_invasion_process_2 = yes
 				set_timed_ship_flag = { flag = pasmod_army_drop_done days = 90 }
 			}
-			every_owned_ship = {
+			every_controlled_ship = {
 				limit = {
 					NOT = { has_ship_flag = pasmod_army_drop_done }
 					OR = {

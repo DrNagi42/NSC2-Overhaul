@@ -21,8 +21,12 @@ tech_space_exploration = {
 	area = engineering
 	start_tech = yes
 	category = { voidcraft }
-	prerequisites = { "tech_basic_science_lab_1" }
 	tier = 0
+
+	#allow auto-explore on science ships
+	feature_flags = {
+		tech_automated_exploration
+	}
 
 	prereqfor_desc = {
 		ship = {
@@ -33,7 +37,7 @@ tech_space_exploration = {
 }
 
 tech_corvettes = {
-	cost = 0
+	cost = @tier0cost1
 	area = engineering
 	start_tech = yes
 	category = { voidcraft }
@@ -45,6 +49,14 @@ tech_corvettes = {
 			title = "TECH_UNLOCK_CORVETTE_CONSTRUCTION_TITLE"
 			desc = "TECH_UNLOCK_CORVETTE_CONSTRUCTION_DESC"
 		}
+	}
+
+	weight_modifier = {
+		factor = 1000
+	}
+
+	ai_weight = {
+		weight = 10000
 	}
 }
 
@@ -339,7 +351,7 @@ tech_juggernaut = {
 	area = engineering
 	category = { voidcraft }
 	tier = 5
-	prerequisites = { "tech_starbase_5" "tech_battleships" }
+	prerequisites = { "tech_starbase_5" "tech_titans" }
 	weight = @tier5weight3
 	is_rare = yes
 
@@ -416,21 +428,122 @@ tech_juggernaut = {
 # Corvette upgrades
 # ##################
 
-tech_corvette_upgrades = {
-	cost = @tier2cost3
+tech_corvette_build_speed = {
+	cost = @tier1cost2
 	area = engineering
-	tier = 2
+	tier = 1
+	category = { voidcraft }
+	prerequisites = { "tech_corvettes" }
+	weight = @tier1weight2
+
+	modifier = {
+		custom_tooltip = tech_corvette_build_speed_effect
+		ship_corvette_cost_mult = -0.05
+		shipsize_corvette_build_speed_mult = 0.25
+		shipsize_offspring_corvette_build_speed_mult = 0.25
+	}
+
+	weight_modifier = {
+		modifier = {
+			factor = value:tech_weight_likelihood
+			research_leader = {
+				area = engineering
+				has_trait = "leader_trait_expertise_voidcraft"
+			}
+		}
+	}
+
+	ai_weight = {
+		modifier = {
+			factor = 1.25
+			research_leader = {
+				area = engineering
+				has_trait = "leader_trait_expertise_voidcraft"
+			}
+		}
+	}
+}
+
+tech_corvette_hull_1 = {
+	cost = @tier1cost3
+	area = engineering
+	tier = 1
 	category = { voidcraft }
 	prerequisites = { "tech_corvettes" }
 	weight = @tier1weight3
 
 	modifier = {
-		shipsize_corvette_hull_add = 400
-		shipsize_corvette_build_speed_mult = 0.25
-		ship_corvette_cost_mult = -0.05
+		custom_tooltip = tech_corvette_hull_effect
+		shipsize_corvette_hull_add = 100
+		shipsize_offspring_corvette_hull_add = 100
 	}
 
 	weight_modifier = {
+		modifier = {
+			factor = value:tech_weight_likelihood
+			research_leader = {
+				area = engineering
+				has_trait = "leader_trait_expertise_voidcraft"
+			}
+		}
+	}
+
+	ai_weight = {
+		modifier = {
+			factor = 1.25
+			research_leader = {
+				area = engineering
+				has_trait = "leader_trait_expertise_voidcraft"
+			}
+		}
+	}
+}
+
+tech_corvette_hull_2 = {
+	cost = @tier2cost3
+	area = engineering
+	tier = 2
+	is_rare = yes
+	category = { voidcraft }
+	prerequisites = { "tech_corvette_hull_1" }
+	weight = @tier2weight3
+
+	modifier = {
+		custom_tooltip = tech_corvette_hull_effect
+		shipsize_corvette_hull_add = 100
+		shipsize_offspring_corvette_hull_add = 100
+	}
+
+	weight_modifier = {
+		modifier = {
+			factor = 0.25
+			NOR = {
+				research_leader = {
+					area = engineering
+					has_trait = "leader_trait_curator"
+				}
+				research_leader = {
+					area = engineering
+					has_trait = "leader_trait_spark_of_genius"
+				}
+				research_leader = {
+					area = engineering
+					has_trait = "leader_trait_expertise_voidcraft"
+				}
+			}
+		}
+		modifier = {
+			factor = @ap_technological_ascendancy_rare_tech
+			has_ascension_perk = ap_technological_ascendancy
+		}
+		modifier = {
+			factor = @federation_perk_factor
+			has_federation = yes
+			federation = {
+				has_federation_perk = rare_tech_boost
+				any_member = { has_technology = tech_corvette_hull_2 }
+			}
+		}
 		modifier = {
 			factor = value:tech_weight_likelihood
 			research_leader = {
@@ -455,21 +568,130 @@ tech_corvette_upgrades = {
 # Destroyer upgrades
 # ##################
 
-tech_destroyer_upgrades = {
-	cost = @tier3cost1
+tech_destroyer_build_speed = {
+	cost = @tier2cost2
 	area = engineering
-	tier = 3
+	tier = 2
 	category = { voidcraft }
 	prerequisites = { "tech_destroyers" }
-	weight = @tier3weight1
+	weight = @tier2weight2
 
 	modifier = {
-		shipsize_destroyer_build_speed_mult = 0.25
+		custom_tooltip = tech_destroyer_build_speed_effect
 		ship_destroyer_cost_mult = -0.05
-		shipsize_destroyer_hull_add = 800
+		shipsize_destroyer_build_speed_mult = 0.25
+		shipsize_offspring_destroyer_build_speed_mult = 0.25
 	}
 
 	weight_modifier = {
+		modifier = {
+			factor = value:tech_weight_likelihood
+			research_leader = {
+				area = engineering
+				has_trait = "leader_trait_expertise_voidcraft"
+			}
+		}
+	}
+
+	ai_weight = {
+		modifier = {
+			factor = 1.25
+			research_leader = {
+				area = engineering
+				has_trait = "leader_trait_expertise_voidcraft"
+			}
+		}
+	}
+}
+
+tech_destroyer_hull_1 = {
+	cost = @tier2cost3
+	area = engineering
+	tier = 2
+	category = { voidcraft }
+	prerequisites = { "tech_destroyers" }
+	weight = @tier2weight3
+
+	modifier = {
+		custom_tooltip = tech_destroyer_hull_effect
+		shipsize_destroyer_hull_add = 200
+		shipsize_offspring_destroyer_hull_add = 200
+	}
+
+	weight_modifier = {
+		modifier = {
+			factor = 1.25
+			has_tradition = tr_supremacy_adopt
+		}
+		modifier = {
+			factor = value:tech_weight_likelihood
+			research_leader = {
+				area = engineering
+				has_trait = "leader_trait_expertise_voidcraft"
+			}
+		}
+	}
+
+	ai_weight = {
+		modifier = {
+			factor = 1.25
+			research_leader = {
+				area = engineering
+				has_trait = "leader_trait_expertise_voidcraft"
+			}
+		}
+	}
+}
+
+tech_destroyer_hull_2 = {
+	cost = @tier3cost1
+	area = engineering
+	tier = 3
+	is_rare = yes
+	category = { voidcraft }
+	prerequisites = { "tech_destroyer_hull_1" }
+	weight = @tier3weight1
+
+	modifier = {
+		custom_tooltip = tech_destroyer_hull_effect
+		shipsize_destroyer_hull_add = 200
+		shipsize_offspring_destroyer_hull_add = 200
+	}
+
+	weight_modifier = {
+		modifier = {
+			factor = 0.25
+			NOR = {
+				research_leader = {
+					area = engineering
+					has_trait = "leader_trait_curator"
+				}
+				research_leader = {
+					area = engineering
+					has_trait = "leader_trait_spark_of_genius"
+				}
+				research_leader = {
+					area = engineering
+					has_trait = "leader_trait_expertise_voidcraft"
+				}
+			}
+		}
+		modifier = {
+			factor = 1.25
+			has_tradition = tr_supremacy_adopt
+		}
+		modifier = {
+			factor = @ap_technological_ascendancy_rare_tech
+			has_ascension_perk = ap_technological_ascendancy
+		}
+		modifier = {
+			factor = @federation_perk_factor
+			has_federation = yes
+			federation = {
+				has_federation_perk = rare_tech_boost
+				any_member = { has_technology = tech_destroyer_hull_2 }
+			}
+		}
 		modifier = {
 			factor = value:tech_weight_likelihood
 			research_leader = {
@@ -494,18 +716,19 @@ tech_destroyer_upgrades = {
 # Cruiser upgrades
 # ##################
 
-tech_cruiser_upgrades = {
-	cost = @tier3cost3
+tech_cruiser_build_speed = {
+	cost = @tier3cost2
 	area = engineering
 	tier = 3
 	category = { voidcraft }
-	prerequisites = { "tech_cruisers" "tech_destroyer_upgrades" }
-	weight = @tier3weight3
+	prerequisites = { "tech_cruisers" }
+	weight = @tier3weight2
 
 	modifier = {
-		shipsize_cruiser_build_speed_mult = 0.25
+		custom_tooltip = tech_cruiser_build_speed_effect
 		ship_cruiser_cost_mult = -0.05
-		shipsize_cruiser_hull_add = 2000
+		shipsize_cruiser_build_speed_mult = 0.25
+		shipsize_offspring_cruiser_build_speed_mult = 0.25
 	}
 
 	weight_modifier = {
@@ -520,7 +743,115 @@ tech_cruiser_upgrades = {
 
 	ai_weight = {
 		modifier = {
-			factor = 1.5
+			factor = 1.25
+			research_leader = {
+				area = engineering
+				has_trait = "leader_trait_expertise_voidcraft"
+			}
+		}
+	}
+}
+
+tech_cruiser_hull_1 = {
+	cost = @tier3cost3
+	area = engineering
+	tier = 3
+	category = { voidcraft }
+	prerequisites = { "tech_cruisers" }
+	weight = @tier3weight3
+
+	modifier = {
+		custom_tooltip = tech_cruiser_hull_effect
+		shipsize_cruiser_hull_add = 500
+		shipsize_offspring_cruiser_hull_add = 500
+	}
+
+	weight_modifier = {
+		modifier = {
+			factor = 1.25
+			has_tradition = tr_supremacy_adopt
+		}
+		modifier = {
+			factor = value:tech_weight_likelihood
+			research_leader = {
+				area = engineering
+				has_trait = "leader_trait_expertise_voidcraft"
+			}
+		}
+	}
+
+	ai_weight = {
+		modifier = {
+			factor = 1.25
+			research_leader = {
+				area = engineering
+				has_trait = "leader_trait_expertise_voidcraft"
+			}
+		}
+	}
+}
+
+tech_cruiser_hull_2 = {
+	cost = @tier4cost1
+	area = engineering
+	tier = 4
+	is_rare = yes
+	category = { voidcraft }
+	prerequisites = { "tech_cruiser_hull_1" }
+	weight = @tier4weight1
+
+	modifier = {
+		custom_tooltip = tech_cruiser_hull_effect
+		shipsize_cruiser_hull_add = 500
+		shipsize_offspring_cruiser_hull_add = 500
+	}
+
+	weight_modifier = {
+		modifier = {
+			factor = 0.25
+			NOR = {
+				research_leader = {
+					area = engineering
+					has_trait = "leader_trait_curator"
+				}
+				research_leader = {
+					area = engineering
+					has_trait = "leader_trait_spark_of_genius"
+				}
+				research_leader = {
+					area = engineering
+					has_trait = "leader_trait_expertise_voidcraft"
+				}
+			}
+		}
+		modifier = {
+			factor = @ap_technological_ascendancy_rare_tech
+			has_ascension_perk = ap_technological_ascendancy
+		}
+		modifier = {
+			factor = @federation_perk_factor
+			has_federation = yes
+			federation = {
+				has_federation_perk = rare_tech_boost
+				any_member = { has_technology = tech_cruiser_hull_2 }
+			}
+		}
+		modifier = {
+			factor = 1.25
+			has_tradition = tr_supremacy_adopt
+		}
+		modifier = {
+			factor = value:tech_weight_likelihood
+			research_leader = {
+				area = engineering
+				has_trait = "leader_trait_expertise_voidcraft"
+			}
+		}
+	}
+
+	ai_weight = {
+		modifier = {
+			factor = 1.25
 			research_leader = {
 				area = engineering
 				has_trait = "leader_trait_expertise_voidcraft"
@@ -533,18 +864,19 @@ tech_cruiser_upgrades = {
 # Battleship upgrades
 # ##################
 
-tech_battleship_upgrades = {
-	cost = @tier4cost4
+tech_battleship_build_speed = {
+	cost = @tier4cost2
 	area = engineering
 	tier = 4
 	category = { voidcraft }
-	prerequisites = { "tech_battleships" "tech_battlecruiser_upgrades" }
-	weight = @tier4weight3
+	prerequisites = { "tech_battleships" }
+	weight = @tier4weight2
 
 	modifier = {
-		shipsize_battleship_build_speed_mult = 0.25
+		custom_tooltip = tech_battleship_build_speed_effect
 		ship_battleship_cost_mult = -0.05
-		shipsize_battleship_hull_add = 3200
+		shipsize_battleship_build_speed_mult = 0.25
+		shipsize_offspring_battleship_build_speed_mult = 0.25
 	}
 
 	weight_modifier = {
@@ -559,7 +891,115 @@ tech_battleship_upgrades = {
 
 	ai_weight = {
 		modifier = {
-			factor = 1.5
+			factor = 1.25
+			research_leader = {
+				area = engineering
+				has_trait = "leader_trait_expertise_voidcraft"
+			}
+		}
+	}
+}
+
+tech_battleship_hull_1 = {
+	cost = @tier4cost3
+	area = engineering
+	tier = 4
+	category = { voidcraft }
+	prerequisites = { "tech_battleships" }
+	weight = @tier4weight3
+
+	modifier = {
+		custom_tooltip = tech_battleship_hull_effect
+		shipsize_battleship_hull_add = 800
+		shipsize_offspring_battleship_hull_add = 800
+	}
+
+	weight_modifier = {
+		modifier = {
+			factor = 1.25
+			has_tradition = tr_supremacy_adopt
+		}
+		modifier = {
+			factor = value:tech_weight_likelihood
+			research_leader = {
+				area = engineering
+				has_trait = "leader_trait_expertise_voidcraft"
+			}
+		}
+	}
+
+	ai_weight = {
+		modifier = {
+			factor = 1.25
+			research_leader = {
+				area = engineering
+				has_trait = "leader_trait_expertise_voidcraft"
+			}
+		}
+	}
+}
+
+tech_battleship_hull_2 = {
+	cost = @tier5cost1
+	area = engineering
+	tier = 5
+	is_rare = yes
+	category = { voidcraft }
+	prerequisites = { "tech_battleship_hull_1" }
+	weight = @tier5weight1
+
+	modifier = {
+		custom_tooltip = tech_battleship_hull_effect
+		shipsize_battleship_hull_add = 800
+		shipsize_offspring_battleship_hull_add = 800
+	}
+
+	weight_modifier = {
+		modifier = {
+			factor = 0.25
+			NOR = {
+				research_leader = {
+					area = engineering
+					has_trait = "leader_trait_curator"
+				}
+				research_leader = {
+					area = engineering
+					has_trait = "leader_trait_spark_of_genius"
+				}
+				research_leader = {
+					area = engineering
+					has_trait = "leader_trait_expertise_voidcraft"
+				}
+			}
+		}
+		modifier = {
+			factor = @ap_technological_ascendancy_rare_tech
+			has_ascension_perk = ap_technological_ascendancy
+		}
+		modifier = {
+			factor = @federation_perk_factor
+			has_federation = yes
+			federation = {
+				has_federation_perk = rare_tech_boost
+				any_member = { has_technology = tech_battleship_hull_2 }
+			}
+		}
+		modifier = {
+			factor = 1.25
+			has_tradition = tr_supremacy_adopt
+		}
+		modifier = {
+			factor = value:tech_weight_likelihood
+			research_leader = {
+				area = engineering
+				has_trait = "leader_trait_expertise_voidcraft"
+			}
+		}
+	}
+
+	ai_weight = {
+		modifier = {
+			factor = 1.25
 			research_leader = {
 				area = engineering
 				has_trait = "leader_trait_expertise_voidcraft"
@@ -572,19 +1012,17 @@ tech_battleship_upgrades = {
 # Titan upgrades
 # ##################
 
-tech_titan_upgrades = {
-	cost = @tier5cost4
+tech_titan_hull_1 = {
+	cost = @tier5cost2
 	area = engineering
 	tier = 5
 	is_rare = yes
 	category = { voidcraft }
-	prerequisites = { "tech_titans" "tech_dreadnought_upgrades"}
-	weight = @tier5weight3
+	prerequisites = { "tech_titans" }
+	weight = @tier5weight2
 
 	modifier = {
-		shipsize_titan_build_speed_mult = 0.25
-		ship_titan_cost_mult = -0.05
-		shipsize_titan_hull_add = 10000
+		shipsize_titan_hull_add = 2000
 	}
 
 	weight_modifier = {
@@ -632,7 +1070,74 @@ tech_titan_upgrades = {
 
 	ai_weight = {
 		modifier = {
-			factor = 1.5
+			factor = 1.25
+			research_leader = {
+				area = engineering
+				has_trait = "leader_trait_expertise_voidcraft"
+			}
+		}
+	}
+}
+
+tech_titan_hull_2 = {
+	cost = @tier5cost3
+	area = engineering
+	tier = 5
+	is_rare = yes
+	category = { voidcraft }
+	prerequisites = { "tech_titan_hull_1" }
+	weight = @tier5weight3
+
+	modifier = {
+		shipsize_titan_hull_add = 2000
+	}
+
+	weight_modifier = {
+		modifier = {
+			factor = 0.25
+			NOR = {
+				research_leader = {
+					area = engineering
+					has_trait = "leader_trait_curator"
+				}
+				research_leader = {
+					area = engineering
+					has_trait = "leader_trait_spark_of_genius"
+				}
+				research_leader = {
+					area = engineering
+					has_trait = "leader_trait_expertise_voidcraft"
+				}
+			}
+		}
+		modifier = {
+			factor = @ap_technological_ascendancy_rare_tech
+			has_ascension_perk = ap_technological_ascendancy
+		}
+		modifier = {
+			factor = @federation_perk_factor
+			has_federation = yes
+			federation = {
+				has_federation_perk = rare_tech_boost
+				any_member = { has_technology = tech_titan_hull_2 }
+			}
+		}
+		modifier = {
+			factor = 1.25
+			has_tradition = tr_supremacy_adopt
+		}
+		modifier = {
+			factor = value:tech_weight_likelihood
+			research_leader = {
+				area = engineering
+				has_trait = "leader_trait_expertise_voidcraft"
+			}
+		}
+	}
+
+	ai_weight = {
+		modifier = {
+			factor = 1.25
 			research_leader = {
 				area = engineering
 				has_trait = "leader_trait_expertise_voidcraft"
@@ -1185,6 +1690,10 @@ tech_space_defense_station_improvement = {
 			}
 		}
 		modifier = {
+			factor = 1.5
+			is_specialist_subject_type = { TYPE = bulwark }
+		}
+		modifier = {
 			factor = @ap_technological_ascendancy_rare_tech
 			has_ascension_perk = ap_technological_ascendancy
 		}
@@ -1389,6 +1898,10 @@ tech_ship_armor_2 = {
 				has_trait = "leader_trait_expertise_materials"
 			}
 		}
+		modifier = {
+			factor = 1.5
+			is_specialist_subject_type = { TYPE = bulwark }
+		}
 	}
 
 	ai_weight = {
@@ -1422,6 +1935,10 @@ tech_ship_armor_3 = {
 				area = engineering
 				has_trait = "leader_trait_expertise_materials"
 			}
+		}
+		modifier = {
+			factor = 1.5
+			is_specialist_subject_type = { TYPE = bulwark }
 		}
 	}
 
@@ -1457,6 +1974,10 @@ tech_ship_armor_4 = {
 				has_trait = "leader_trait_expertise_materials"
 			}
 		}
+		modifier = {
+			factor = 1.5
+			is_specialist_subject_type = { TYPE = bulwark }
+		}
 	}
 
 	ai_weight = {
@@ -1488,6 +2009,10 @@ tech_ship_armor_5 = {
 				area = engineering
 				has_trait = "leader_trait_expertise_materials"
 			}
+		}
+		modifier = {
+			factor = 1.5
+			is_specialist_subject_type = { TYPE = bulwark }
 		}
 	}
 
@@ -1750,6 +2275,10 @@ tech_defense_platform_hull_1 = {
 				area = engineering
 				has_trait = "leader_trait_expertise_voidcraft"
 			}
+		}
+		modifier = {
+			factor = 1.5
+			is_specialist_subject_type = { TYPE = bulwark }
 		}
 	}
 
@@ -2117,6 +2646,10 @@ tech_mineral_purification_1 = {
 				has_trait = "leader_trait_expertise_industry"
 			}
 		}
+		modifier = {
+			factor = 1.5
+			is_specialist_subject_type = { TYPE = prospectorium }
+		}
 	}
 
 	ai_weight = {
@@ -2149,6 +2682,10 @@ tech_mineral_purification_2 = {
 				area = engineering
 				has_trait = "leader_trait_expertise_industry"
 			}
+		}
+		modifier = {
+			factor = 1.5
+			is_specialist_subject_type = { TYPE = prospectorium }
 		}
 		modifier = {
 			factor = 0
@@ -2199,6 +2736,10 @@ tech_alloys_1 = {
 				has_trait = "leader_trait_expertise_materials"
 			}
 		}
+		modifier = {
+			factor = 1.5
+			is_specialist_subject_type = { TYPE = prospectorium }
+		}
 	}
 
 	ai_weight = {
@@ -2232,6 +2773,10 @@ tech_alloys_2 = {
 				area = engineering
 				has_trait = "leader_trait_expertise_materials"
 			}
+		}
+		modifier = {
+			factor = 1.5
+			is_specialist_subject_type = { TYPE = prospectorium }
 		}
 	}
 
@@ -2349,6 +2894,10 @@ tech_luxuries_1 = {
 				has_trait = "leader_trait_expertise_materials"
 			}
 		}
+		modifier = {
+			factor = 1.5
+			is_specialist_subject_type = { TYPE = prospectorium }
+		}
 	}
 
 	ai_weight = {
@@ -2389,6 +2938,10 @@ tech_luxuries_2 = {
 				area = engineering
 				has_trait = "leader_trait_expertise_materials"
 			}
+		}
+		modifier = {
+			factor = 1.5
+			is_specialist_subject_type = { TYPE = prospectorium }
 		}
 	}
 
@@ -2444,6 +2997,10 @@ tech_engineering_1 = {
 				has_trait = "leader_trait_expertise_industry"
 			}
 		}
+		modifier = {
+			factor = 1.5
+			is_specialist_subject_type = { TYPE = scholarium }
+		}
 	}
 
 	ai_weight = {
@@ -2495,6 +3052,10 @@ tech_engineering_2 = {
 				has_trait = "leader_trait_expertise_industry"
 			}
 		}
+		modifier = {
+			factor = 1.5
+			is_specialist_subject_type = { TYPE = scholarium }
+		}
 	}
 
 	ai_weight = {
@@ -2545,6 +3106,10 @@ tech_engineering_3 = {
 				area = engineering
 				has_trait = "leader_trait_expertise_industry"
 			}
+		}
+		modifier = {
+			factor = 1.5
+			is_specialist_subject_type = { TYPE = scholarium }
 		}
 	}
 
